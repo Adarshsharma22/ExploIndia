@@ -9,7 +9,7 @@ export default function EditTrip() {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [pageloading, setpageLoading] = useState(true);
 
   useEffect(() => {
     const fetchTrip = async () => {

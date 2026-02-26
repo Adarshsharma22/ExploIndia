@@ -4,38 +4,39 @@ import { registerUser } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
-    const navigate = useNavigate();
-    const { login } = useAuth();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [fullName, setFullName] = useState('');  // Fixed typo (setfullName → setFullName)
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [agree, setAgree] = useState(false);
+  const [error, setError] = useState(null);  // Added for UX
 
-    const [fullName, setfullName] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [agree, setAgree] = useState(false);
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
+    if (!fullName || !username || !email || !password) {
+      setError('All fields are required');
+      return;
+    }
 
-        if (!fullName || !username || !email || !password) {
-            alert('All fields are required');
-            return;
-        }
+    if (!agree) {
+      setError('Please agree to the Terms and Privacy Policy');
+      return;
+    }
 
-        if (!agree) {
-            alert('Please agree to the Terms and Privacy Policy');
-            return;
-        }
+    try {
+      setError(null);
+      const data = await registerUser(fullName, username, email, password);
 
-        try {
-            const data = await registerUser(fullName, username, email, password);
-
-            // auto login after signup
-            login(data);
-            navigate('/home');
-        } catch (err) {
-            alert(err.message);
-        }
-    };
+      // Auto login after signup
+      login(data);
+      navigate('/home');
+    } catch (err) {
+      setError(err.message || 'Signup failed. Please try again.');
+    }
+  };
 
     return (
         <div className="font-inter min-h-screen bg-slate-50  dark:bg-slate-900 text-slate-800 dark:text-white/90 antialiased">
@@ -59,15 +60,15 @@ const Signup = () => {
 
                         {/* bottom route line */}
                         <span className="absolute bottom-1 left-1/2 -translate-x-1/2
-                        w-10 h-[3px] rounded-full
-                        bg-gradient-to-r from-ei_orange to-ei_teal
+                        w-10 h-0.75 rounded-full
+                        bg-linear-to-r from-ei_orange to-ei_teal
                         opacity-80"></span>
                         
 
 
 
                         </Link>
-                        <Link to="/login" className="px-4 py-2 text-sm font-semibold rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
+                        <Link to="/login" className="px-4 py-2 text-sm hidden lg:block font-semibold rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
                             Already have an account? Login
                         </Link>
                     </div>
@@ -94,7 +95,7 @@ const Signup = () => {
                                     type="text"
                                     required
                                     value={fullName}
-                                    onChange={(e) => setfullName(e.target.value)}
+                                    onChange={(e) => setFullName(e.target.value)}
                                     className="appearance-none rounded-t-md relative block w-full px-4 py-3 border border-slate-300 dark:border-slate-600 placeholder-slate-400 text-slate-900 dark:text-slate-100 dark:bg-slate-700 focus:outline-none focus:ring-ei_teal focus:border-ei_teal focus:z-10 sm:text-sm transition-colors duration-200"
                                     placeholder="Full Name (e.g., Jane Doe)"
                                 />
@@ -146,7 +147,7 @@ const Signup = () => {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-lg font-medium rounded-full text-white bg-gradient-to-r from-ei_orange to-ei_blue hover:shadow-[0_10px_25px_rgba(255,140,0,0.55)] hover:-translate-y-0.5 hover:brightness-110 transition-all duration-300"
+                                className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-lg font-medium rounded-full text-white bg-linear-to-r from-ei_orange to-ei_blue hover:shadow-[0_10px_25px_rgba(255,140,0,0.55)] hover:-translate-y-0.5 hover:brightness-110 transition-all duration-300"
                             >
                                 Sign Up
                             </button>
@@ -154,6 +155,7 @@ const Signup = () => {
                     </form>
 
                     <div className="text-center text-sm">
+                    {error && <p className="text-red-500 mb-2">{error}</p>}  {/* Show error */}
                         <Link to="/login" className="font-medium text-ei_teal hover:text-ei_orange transition-colors">
                             Already an ExploIndia member? Log in here
                         </Link>

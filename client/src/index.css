@@ -8,3 +8,19 @@
   --color-ei_teal: oklch(56.6% 0.08 193);
   --color-ei_blue: oklch(33.958% 0.1144 268.086);
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

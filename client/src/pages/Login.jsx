@@ -3,29 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { loginUser } from "../services/authService";
 
-
-
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);  // Added for better UX
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("All fields are required");
+      setError("All fields are required");
       return;
     }
 
     try {
+      setError(null);
       const data = await loginUser(email, password);
-      login(data);
+      login(data);  // Sets user in context & localStorage
       navigate("/home");
     } catch (err) {
-      alert(err.message);
+      setError(err.message || "Login failed. Please try again.");
     }
   };
 
@@ -43,19 +43,22 @@ export default function Login() {
                             E
                             </span> 
                             LCOME
+                            <span className="text-ei_blue text-2xl">
+                              BACK
+                            </span>
                         </span>
 
                         {/* bottom route line */}
                         <span className="absolute bottom-1 left-1/2 -translate-x-1/2
-                        w-10 h-[3px] rounded-full
-                        bg-gradient-to-r from-ei_orange to-ei_teal
+                        w-10 h-0.75 rounded-full
+                        bg-linear-to-r from-ei_orange to-ei_teal
                         opacity-80"></span>
                         
 
 
 
                         </Link>
-                        <Link to="/Signup" className="px-4 py-2 text-sm font-semibold rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
+                        <Link to="/Signup" className="px-4 py-2 text-sm font-semibold hidden lg:block rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
                             Need an account? Sign Up
                         </Link>
                     </div>
@@ -113,12 +116,12 @@ export default function Login() {
 
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-3.5 px-4 text-lg font-medium rounded-full text-white bg-gradient-to-r from-ei_teal to-ei_blue hover:shadow-[0_10px_25px_rgba(0,180,180,0.55)] transition-all duration-300"
+              className="group relative w-full flex justify-center py-3.5 px-4 text-lg font-medium rounded-full text-white bg-linear-to-r from-ei_teal to-ei_blue hover:shadow-[0_10px_25px_rgba(0,180,180,0.55)] transition-all duration-300"
             >
               Log In
             </button>
           </form>
-          <div className="relative">
+          {/* <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-slate-300 dark:border-slate-600"></div>
                         </div>
@@ -127,8 +130,8 @@ export default function Login() {
                                 Or log in with
                             </span>
                         </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    </div> */}
+                    {/* <div className="grid grid-cols-2 gap-3">
                         <button type="button" className="w-full inline-flex justify-center py-2.5 px-4 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors duration-200">
                             <img src="img/google_2702602.png" alt="Google logo" className="w-5 h-5 mr-2" />
                             Google
@@ -137,8 +140,9 @@ export default function Login() {
                             <img src="img/facebook_3536394.png" alt="Facebook logo" className="w-5 h-5 mr-2" />
                             Facebook
                         </button>
-                    </div>
+                    </div> */}
                     <div className="text-center text-sm">
+                        {error && <p className="text-red-500 mb-2">{error}</p>}  {/* Show error */}
                         <Link to="/Signup" className="font-medium text-ei_orange hover:text-ei_teal transition-colors duration-200">
                             Don't have an account? Sign up now
                         </Link>

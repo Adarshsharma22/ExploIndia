@@ -1,55 +1,59 @@
 import React from 'react';
+import { Link } from 'react-router-dom';  // Add this import
+import { useAuth } from '../context/AuthContext';  
 
 const MobileMenu = ({ isOpen }) => {
+  const { user } = useAuth();  // Get current user
+
   return (
     <div
-      id="mobileMenu"
-      // If isOpen is false, add 'hidden'. If true, remove 'hidden'.
-      // md:hidden is always present to ensure it stays hidden on desktop.
-      className={`${isOpen ? '' : 'hidden'} md:hidden border-t border-slate-200 dark:border-slate-800 dark:bg-slate-800 bg-white text-slate-700 dark:text-slate-200 backdrop:blur`}
+  id="mobileMenu"
+  className={`
+    fixed top-16 right-4 z-[60] w-20 
+    transition-all duration-500 ease-in-out transform origin-top-right
+    ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'}
+    rounded-3xl border border-white/20 dark:border-slate-700/50 
+    bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-2xl
+  `}
+>
+  <div className="flex flex-col items-center py-6 space-y-6">
+    {/* HOME ICON */}
+    <Link
+      to="/home"
+      onClick={() => setIsOpen(false)}
+      className="p-3 rounded-2xl text-slate-700 dark:text-slate-200 hover:bg-ei_teal/20 hover:text-ei_teal transition-all active:scale-90"
     >
-      <div className="px-4 py-4 space-y-2">
-        <a
-          href="home"
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-ei_teal transition"
-        >
-          <i className="uil uil-home text-xl"></i>
-          <span>Home</span>
-        </a>
+      <i className="uil uil-home text-2xl"></i>
+    </Link>
 
-        <a
-          href="Profile"
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-ei_teal transition"
-        >
-          <i className="uil uil-user-circle text-xl"></i>
-          <span>Profile</span>
-        </a>
+    {/* PROFILE ICON */}
+    <Link
+      to={user ? `/profile/${user.id}` : '/login'}
+      onClick={() => setIsOpen(false)}
+      className="p-3 rounded-2xl text-slate-700 dark:text-slate-200 hover:bg-ei_teal/20 hover:text-ei_teal transition-all active:scale-90"
+    >
+      <i className="uil uil-user-circle text-2xl"></i>
+    </Link>
 
-        <a
-          href="#"
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-ei_teal transition"
-        >
-          <i className="uil uil-compass text-xl"></i>
-          <span>Explore Destinations</span>
-        </a>
+    {/* CREATE TRIP ICON */}
+    <Link
+      to="/createtrip"
+      onClick={() => setIsOpen(false)}
+      className="p-3 rounded-2xl text-white bg-gradient-to-br from-ei_orange to-orange-500 shadow-lg shadow-orange-500/30 hover:brightness-110 transition-all active:scale-90"
+    >
+      <i className="uil uil-plus text-2xl"></i>
+    </Link>
 
-        <a
-          href="#"
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-ei_teal transition"
-        >
-          <i className="uil uil-history text-xl"></i>
-          <span>Timeline</span>
-        </a>
-
-        <a
-          href="AboutUs"
-          className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-ei_teal transition"
-        >
-          <i className="uil uil-info-circle text-xl"></i>
-          <span>About Us</span>
-        </a>
-      </div>
-    </div>
+    {/* ABOUT US ICON */}
+    <Link
+      to="/aboutus"
+      onClick={() => setIsOpen(false)}
+      className="p-3 rounded-2xl text-slate-700 dark:text-slate-200 hover:bg-ei_teal/20 hover:text-ei_teal transition-all active:scale-90"
+    >
+      <i className="uil uil-info-circle text-2xl"></i>
+    </Link>
+  </div>
+</div>
   );
 };
 

@@ -4,14 +4,14 @@ export default function Welcome() {
   return (
     <>
 
-<header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-800 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
+<header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
     <div className="max-w-7xl mx-auto px-4 sm:px-6">
       <div className="flex items-center justify-between h-16">
         <a href="index.html" className="flex items-center gap-3 group">
-          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-ei_orange via-orange-500 to-ei_teal shadow-[0_4px_12px_rgba(255,140,0,0.35)] flex items-center justify-center text-white text-2xl font-extrabold transition-all duration-500 hover:scale-110">E</div>
+          <div className="w-11 h-11 rounded-xl bg-linear-to-br from-ei_orange via-orange-500 to-ei_teal shadow-[0_4px_12px_rgba(255,140,0,0.35)] flex items-center justify-center text-white text-2xl font-extrabold transition-all duration-500 hover:scale-110">E</div>
           <span className="font-bold text-xl text-slate-800 dark:text-white/90 tracking-wide">Explo<span className="text-ei_orange">India</span></span>
         </a>
-        <nav className="hidden md:flex items-center gap-2 text-sm font-semibold">
+        {/* <nav className="hidden md:flex items-center gap-2 text-sm font-semibold">
             <Link
                 to="/home"
                 className="px-4 py-2 rounded-full text-slate-700 dark:text-white/90 hover:text-white 
@@ -21,7 +21,7 @@ export default function Welcome() {
               >
                 Home
             </Link>
-        </nav>
+        </nav> */}
       </div>
     </div>
   </header>    
@@ -35,7 +35,7 @@ export default function Welcome() {
           Share your 
           <span className="text-ei_orange">journeys</span>,<br />
 
-          <span className="bg-gradient-to-r from-ei_orange via-ei_blue to-ei_teal 
+          <span className="bg-linear-to-r from-ei_orange via-ei_blue to-ei_teal 
                        bg-clip-text text-transparent">
             discover new destinations
           </span>
@@ -52,7 +52,7 @@ export default function Welcome() {
           
           <a href="Signup"
              className="px-8 py-3.5 rounded-full font-semibold text-white text-lg
-                    bg-gradient-to-r  from-ei_teal to-ei_blue
+                    bg-linear-to-r  from-ei_teal to-ei_blue
                     hover:shadow-[0_10px_25px_rgba(0,180,180,0.55)]
                     hover:-translate-y-1 hover:brightness-110
                     transition-all duration-300">
@@ -80,26 +80,26 @@ export default function Welcome() {
           <img className="col-span-2 h-48 w-full rounded-2xl object-cover 
                       shadow-[0_8px_20px_rgba(255,140,0,0.25)]
                       hover:scale-[1.03] transition-all duration-300"
-               src="https://images.unsplash.com/photo-1564507592333-c60657eea523?q=80&w=1200&auto=format&fit=crop"
-               alt="Taj Mahal" />
+               src="/img/PremMandirVrindavan.jpg"
+               alt="Prem Mandir" />
 
           <img className="h-48 w-full rounded-2xl object-cover
                       shadow-[0_8px_20px_rgba(0,180,180,0.25)]
                       hover:scale-[1.03] transition-all duration-300"
-               src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?q=80&w=1200&auto=format&fit=crop"
-               alt="Goa Beach" />
+               src="/img/NorthEast.png"
+               alt="northeast" />
 
           <img className="h-48 w-full rounded-2xl object-cover
                       shadow-[0_8px_20px_rgba(0,120,255,0.25)]
                       hover:scale-[1.03] transition-all duration-300"
-               src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop"
-               alt="Himalayas" />
+               src="/img/Kalpa.jpg.webp"
+               alt="Kalpa" />
 
           <img className="col-span-2 h-48 w-full rounded-2xl object-cover
                       shadow-[0_8px_20px_rgba(255,140,0,0.25)]
                       hover:scale-[1.03] transition-all duration-300"
-               src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop"
-               alt="Hawa Mahal" />
+               src="/img/kedarnath-4k.jpg"
+               alt="kedarnath Temple" />
 
         </div>
       </div>
