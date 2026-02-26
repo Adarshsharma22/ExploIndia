@@ -6,8 +6,8 @@ import PrivateRoute from "./routes/PrivateRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import CreatePost from "./pages/CreatePost";
-import EditPost from "./pages/EditPost";
+import CreateTrip from "./pages/CreateTrip";
+import EditTrip from "./pages/EditTrip";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import AboutUs from "./pages/AboutUs";
@@ -26,17 +26,18 @@ function App() {
         <Route path="/signup" element={<Signup />} />
 
       <Route element={<MainLayout />}>
-        
-        <Route path="/home" element={<Home />} /> 
-        <Route path="/createpost" element={<CreatePost />} />
-        <Route path="/editpost" element={<EditPost />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editprofile" element={<EditProfile />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/Welcome" element={<Welcome />} />
-        <Route path="/home" element={<PrivateRoute><Home /> </PrivateRoute>} />
+        <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/create-trip" element={<CreateTrip />} />
+        <Route path="/edit-trip/:id" element={<EditTrip />} /> 
+        <Route path="/profile/:id" element={<Profile />} /> 
+        <Route path="/edit-profile" element={<EditProfile />} /> 
+        <Route path="/about-us" element={<AboutUs />} /> 
+        <Route path="/search" element={<Search />} /> 
+        <Route path="/profile" element={<Navigate to="/home" replace />} />
       </Route>
+
+      {/* Catch-all for 404 */}
+      <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
   </div>

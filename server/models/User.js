@@ -1,68 +1,28 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
-  {
-    fullName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    avatar: {
-      type: String,
-      default: "",
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    bio: {
-      type: String,
-      default: "",
-    },
-    location: {
-      type: String,
-      default: "",
-    },
-    profilePicture: {
-      type: String,
-      default: "",
-    },
-    coverImage: {
-      type: String,
-      default: "",
-    },
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
+const travelerInfoSchema = new mongoose.Schema({  
+  favoriteTravelType: { type: [String], default: [] }, 
+  favoriteTraveledPlace: { type: String, default: '' },
+  travelInterests: { type: [String], default: [] }, 
+  placesVisited: { type: [String], default: [] },
+  statesVisited: { type: [String], default: [] },
+  bucketList: { type: [String], default: [] }
+});
 
-    stats: {
-      posts: { type: Number, default: 0 },
-      followers: { type: Number, default: 0 },
-      following: { type: Number, default: 0 },
-      tripsCompleted: { type: Number, default: 0 },
-    },
-
-    travelInfo: {
-      favoriteType: String,
-      interests: [String],
-      statesVisited: Number,
-      countriesVisited: Number,
-      bucketList: [String],
-    },
-  },
-  { timestamps: true }
-);
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  fullName: { type: String, required: true, trim: true, }, 
+  location: { type: String, default: '' },
+  bio: { type: String, default: '' },
+  profilePic: { type: String, default: 'default-profile.jpg' }, // URL to image
+  coverPic: { type: String, default: 'default-cover.jpg' }, // URL to background image
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  travelerInfo: travelerInfoSchema,  
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trip' }],
+  favoritePosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Trip' }]
+}, { timestamps: true });
 
 export default mongoose.model("User", userSchema);

@@ -50,7 +50,8 @@ router.post("/register", async (req, res) => {
         fullName: user.fullName,
         username: user.username,
         email: user.email,
-      },
+        profilePic: user.profilePic,
+      }
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -89,10 +90,11 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        name: user.name,
+        fullName: user.fullName,
         username: user.username,
         email: user.email,
-      },
+        profilePic: user.profilePic,
+      }
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

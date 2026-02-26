@@ -95,7 +95,7 @@ export default function AboutUs() {
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-slate-100 dark:bg-slate-800 py-12 border-t border-slate-200 dark:border-slate-700">
+      <footer className="bg-slate-300 dark:bg-slate-800 py-12 border-t border-slate-400 dark:border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <p className="text-slate-500 dark:text-slate-400">
             © 2025 ExploIndia. Made with ❤️ for Indian Travellers.

@@ -1,8 +1,8 @@
 // src/pages/Home.jsx
 import LeftSidebar from "../components/LeftSidebar";
 import RightSidebar from "../components/RightSidebar";
-import PostComposer from "../components/PostComposer";
-import PostCard from "../components/PostCard";
+import TripComposer from "../components/TripComposer";
+import TripCard from "../components/TripCard";
 
 export default function Home() {
   return (
@@ -14,8 +14,8 @@ export default function Home() {
         </aside>
 
         <section className="lg:col-span-6">
-          <PostComposer />
-          <PostCard />
+          <TripComposer />
+          <tripCard />
         </section>
 
         <aside className="lg:col-span-3">

@@ -29,7 +29,7 @@ const LeftSidebar = () => {
             className="flex-1 text-center py-2 rounded bg-ei_teal hover:bg-green-400 text-white font-medium hover:opacity-95"
             href="#"
           >
-            Posts
+            Trips
           </a>
           <a
             className="flex-1 text-center py-2 rounded border border-slate-200 hover:bg-slate-50 dark:hover:text-slate-800"

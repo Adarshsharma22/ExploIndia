@@ -1,365 +1,215 @@
-import React, { useState } from 'react';
-import { MapPin, Edit, MessageCircle, UserPlus, Camera, Settings, Globe, Users, Map, Award, Lock, Eye } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom'; // Added useNavigate
+import { useAuth } from '../context/AuthContext';
+import { getProfile, getUserTrip, toggleFavorite } from '../services/authService';
+import EditProfileForm from './EditProfile';
+import CreateTripForm from './CreateTrip';  // Renamed from CreatePost
+import TripCard from '../components/TripCard';  // Renamed from PostCard
 
-// Sample User Data
-const sampleUserData = {
-  id: 1,
-  profilePicture: "user.profilePicture",
-  coverImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=300&fit=crop",
-  fullName: "Rohan Sharma",
-  username: "rohan_wanderer",
-  location: "Mumbai, Maharashtra",
-  bio: "🌏 Solo traveler | 📸 Photography enthusiast | ✈️ Exploring India one state at a time",
-  isOwnProfile: true,
-  isPrivate: false,
-  stats: {
-    posts: 127,
-    followers: 2845,
-    following: 312,
-    tripsCompleted: 23
-  },
-  travelInfo: {
-    favoriteType: "Solo Adventure",
-    interests: ["Mountains", "Photography", "Local Cuisine", "Heritage Sites", "Trekking"],
-    statesVisited: 18,
-    countriesVisited: 5,
-    bucketList: ["Leh-Ladakh", "Andaman Islands", "Spiti Valley", "Meghalaya"]
-  },
-  achievements: [
-    { icon: "🏔️", title: "Mountain Explorer", description: "Visited 10+ hill stations" },
-    { icon: "📸", title: "Photo Pro", description: "100+ photos uploaded" },
-    { icon: "🗺️", title: "State Hopper", description: "Explored 18 states" }
-  ],
-  posts: [
-    { id: 1, image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&h=400&fit=crop", likes: 245 },
-    { id: 2, image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=400&fit=crop", likes: 189 },
-    { id: 3, image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&h=400&fit=crop", likes: 312 },
-  ],
-  trips: [
-    { id: 1, destination: "Manali", duration: "5 days", image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&h=300&fit=crop" },
-    { id: 2, destination: "Goa", duration: "4 days", image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=400&h=300&fit=crop" },
-  ]
-};
+function ProfilePage() {
+  const { id } = useParams();
+  const navigate = useNavigate(); // Added for redirects
+  const { user } = useAuth();  // Get current user from context
+  const [profile, setProfile] = useState(null);
+  const [trips, setTrips] = useState([]);  // User's trips
+  const [favoriteTrips, setFavoriteTrips] = useState([]);  // Favorite trip IDs
+  const [isEditing, setIsEditing] = useState(false);
+  const [isCreatingTrip, setIsCreatingTrip] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-// ProfileHeader Component
-const ProfileHeader = ({ user, isDark }) => {
+  useEffect(() => {
+    const effectiveId = id || user?._id; // Fallback to current user ID if no param
+    console.log('Effective User ID for fetch:', effectiveId); // Add this log for debug
+
+    if (!effectiveId) {
+      // No ID available - redirect to login or home
+      setError('No user ID available. Please log in.');
+      navigate('/login'); // Adjust to your login path
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const { data: profileData } = await getProfile(effectiveId);
+        setProfile(profileData);
+        setFavoriteTrips(profileData.favoriteTrips || []);
+
+        const { data: tripsData } = await getUserTrip(effectiveId);
+        setTrips(tripsData);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        setError(err.message || 'Failed to load profile');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, user, navigate]); // Added navigate to deps
+
+  const handleToggleFavorite = async (tripId) => {
+    try {
+      await toggleFavorite(tripId);
+      const effectiveId = id || user?._id;
+      const { data } = await getProfile(effectiveId);  // Refresh profile
+      setFavoriteTrips(data.favoriteTrips || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const isOwnProfile = (id === user?._id) || !id;  // Hide edit/create if not own profile
+
+  if (loading) return <div className="min-h-screen pt-20 flex items-center justify-center">Loading...</div>;
+  if (error) return <div className="min-h-screen pt-20 flex items-center justify-center text-red-500">{error}</div>;
+  if (!profile) return <div className="min-h-screen pt-20 flex items-center justify-center">Profile not found</div>;
+
+  // Rest of your return statement remains the same
   return (
-    <div className="relative">
-      {/* Cover Image */}
-      <div className="h-48 md:h-64 overflow-hidden rounded-t-xl">
-        <img 
-          src={user.coverImage} 
-          alt="Cover" 
-          className="w-full h-full object-cover"
-        />
-      </div>
-      
-      {/* Profile Content */}
-      <div className="px-4 md:px-6 pb-6">
-        {/* Profile Picture & Actions */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between -mt-16 md:-mt-20">
-          {/* Profile Picture */}
-          <div className="relative">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-800 shadow-xl">
-              <img 
-                src={user.profilePicture} 
-                alt={user.fullName}
-                className="w-full h-full object-cover"
+    <main className="min-h-screen pt-20 bg-slate-50 dark:bg-slate-800">
+      <section className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-12 lg:gap-6">
+        {/* Profile content */}
+        <div className="lg:col-span-3">
+          {/* Profile card */}
+          <div className="rounded-xl bg-white/90 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 backdrop-blur-sm p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)] mb-6">
+            <div className="relative">
+              <img
+                className="w-full h-32 rounded-t-lg object-cover"
+                src={profile.coverPic || '/default-cover.jpg'}
+                alt="Cover"
+              />
+              <img
+                className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full border-4 border-white dark:border-slate-700 object-cover"
+                src={profile.profilePic || '/default-avatar.jpg'}
+                alt="Profile"
               />
             </div>
-            {user.isOwnProfile && (
-              <button className="absolute bottom-2 right-2 p-2 bg-blue-600 rounded-full text-white shadow-lg hover:bg-blue-700 transition">
-                <Camera size={18} />
-              </button>
-            )}
-          </div>
-          
-          {/* Action Buttons */}
-          <div className="flex gap-3 mt-4 md:mt-0 md:mb-4">
-            {user.isOwnProfile ? (
-              <>
-                <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-                  <Edit size={18} />
+            <div className="mt-10 text-center">
+              <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">{profile.fullName}</h1>
+              <p className="text-sm text-ei_teal">@{profile.username}</p>
+              <p className="mt-2 text-slate-600 dark:text-slate-300">{profile.bio}</p>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{profile.location}</p>
+              <div className="mt-3 flex justify-center gap-4 text-sm text-slate-600 dark:text-slate-300">
+                <span><strong>{profile.followers?.length || 0}</strong> Followers</span>
+                <span><strong>{profile.following?.length || 0}</strong> Following</span>
+              </div>
+            </div>
+            {isOwnProfile && (
+              <div className="mt-4 flex gap-2">
+                <button 
+                  onClick={() => setIsEditing(true)}
+                  className="flex-1 bg-ei_teal text-white py-2 rounded-lg hover:bg-ei_teal/90 transition"
+                >
                   Edit Profile
                 </button>
-                <button className="p-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300 rounded-lg transition">
-                  <Settings size={20} />
+                <button 
+                  onClick={() => setIsCreatingTrip(true)}
+                  className="flex-1 bg-ei_orange text-white py-2 rounded-lg hover:bg-ei_orange/90 transition"
+                >
+                  Create Trip
                 </button>
-              </>
-            ) : (
-              <>
-                <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-                  <UserPlus size={18} />
-                  Follow
-                </button>
-                <button className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300  rounded-lg transition font-medium">
-                  <MessageCircle size={18} />
-                  Message
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-        
-        {/* User Info */}
-        <div className="mt-4">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-2xl md:text-3xl font-bold">{user.fullName}</h1>
-            {user.isPrivate && (
-              <span className="flex items-center gap-1 px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full text-xs font-medium">
-                <Lock size={12} />
-                Private
-              </span>
-            )}
-          </div>
-          <p className="text-sm mt-1 dark:text-gray-400 text-gray-600">@{user.username}</p>
-          <div className="flex items-center gap-1.5 mt-2 text-sm dark:text-gray-400 text-gray-600">
-            <MapPin size={16} />
-            <span>{user.location}</span>
-          </div>
-          <p className="mt-3 text-base leading-relaxed">{user.bio}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// StatsBar Component
-const StatsBar = ({ stats, isDark }) => {
-  const statItems = [
-    { label: 'Posts', value: stats.posts },
-    { label: 'Followers', value: stats.followers.toLocaleString() },
-    { label: 'Following', value: stats.following },
-    { label: 'Trips', value: stats.tripsCompleted }
-  ];
-  
-  return (
-    <div className="grid grid-cols-4 gap-4 p-4 md:p-6 rounded-xl dark:bg-gray-800 bg-white shadow-md">
-      {statItems.map((stat, index) => (
-        <div key={index} className="text-center">
-          <p className="text-xl md:text-2xl font-bold text-blue-600">{stat.value}</p>
-          <p className="text-xs md:text-sm mt-1 dark:text-gray-400 text-gray-600">{stat.label}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// TravelInfo Component
-const TravelInfo = ({ travelInfo, isDark }) => {
-  return (
-    <div className="p-4 md:p-6 rounded-xl dark:bg-gray-800 bg-white shadow-md">
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <Globe className="text-teal-500" size={24} />
-        Travel Information
-      </h2>
-      
-      <div className="space-y-4">
-        {/* Favorite Type */}
-        <div>
-          <p className="text-sm font-medium mb-2 dark:text-gray-400 text-gray-600 ">Favorite Travel Type</p>
-          <span className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-full text-sm font-medium">
-            {travelInfo.favoriteType}
-          </span>
-        </div>
-        
-        {/* Interests */}
-        <div>
-          <p className="text-sm font-medium mb-2 dark:text-gray-400 text-gray-600">Travel Interests</p>
-          <div className="flex flex-wrap gap-2">
-            {travelInfo.interests.map((interest, index) => (
-              <span 
-                key={index}
-                className="px-3 py-1.5 dark:bg-gray-700 bg-gray-100 text-gray-700 dark:text-gray-100 rounded-full text-sm">
-                {interest}
-              </span>
-            ))}
-          </div>
-        </div>
-        
-        {/* Places Visited */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-4 rounded-lg dark:bg-gray-700/50 bg-gray-50">
-            <p className="text-2xl font-bold text-teal-500">{travelInfo.statesVisited}</p>
-            <p className="text-sm mt-1 dark:text-gray-400 text-gray-600">States Visited</p>
-          </div>
-          <div className="p-4 rounded-lg dark:bg-gray-700/50 bg-gray-50">
-            <p className="text-2xl font-bold text-orange-500">{travelInfo.countriesVisited}</p>
-            <p className="text-sm mt-1 dark:text-gray-400 text-gray-600">Countries</p>
-          </div>
-        </div>
-        
-        {/* Bucket List */}
-        <div>
-          <p className="text-sm font-medium mb-2 dark:text-gray-400 text-gray-600">Bucket List Destinations</p>
-          <div className="flex flex-wrap gap-2">
-            {travelInfo.bucketList.map((place, index) => (
-              <span 
-                key={index}
-                className="px-3 py-1.5 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full text-sm font-medium"
-              >
-                {place}
-              </span>
-            ))}
-          </div>
-        </div>  
-      </div>
-    </div>
-  );
-};
-
-// Achievements Component
-const Achievements = ({ achievements, isDark }) => {
-  return (
-    <div className="p-4 md:p-6 rounded-xl dark:bg-gray-800 bg-white  shadow-md">
-      <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <Award className="text-orange-500" size={24} />
-        Achievements
-      </h2>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {achievements.map((achievement, index) => (
-          <div 
-            key={index}
-            className="p-4 rounded-lg dark:bg-gray-700/50 dark:hover:bg-gray-700 bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
-            <div className="text-3xl mb-2">{achievement.icon}</div>
-            <h3 className="font-semibold mb-1">{achievement.title}</h3>
-            <p className="text-sm Dark:text-gray-400 text-gray-600">{achievement.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ProfileTabs Component
-const ProfileTabs = ({ posts, trips, isDark }) => {
-  const [activeTab, setActiveTab] = useState('posts');
-  
-  const tabs = [
-    { id: 'posts', label: 'Posts', icon: Camera },
-    { id: 'trips', label: 'Trips', icon: Map },
-    { id: 'saved', label: 'Saved', icon: Award },
-    { id: 'tagged', label: 'Tagged', icon: Users }
-  ];
-  
-  const EmptyState = ({ message }) => (
-    <div className="text-center py-16">
-      <div className={`text-6xl mb-4 ${isDark ? 'text-gray-700' : 'text-gray-300'}`}>📭</div>
-      <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{message}</p>
-    </div>
-  );
-  
-  return (
-    <div className="rounded-xl dark:bg-gray-800 bg-white shadow-md overflow-hidden">
-      {/* Tab Navigation */}
-      <div className="flex border-b dark:border-gray-700 border-gray-200">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-4 font-medium transition ${
-                activeTab === tab.id
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : isDark ? 'text-gray-400 hover:text-gray-300' : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <Icon size={20} />
-              <span className="hidden sm:inline">{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
-      
-      {/* Tab Content */}
-      <div className="p-4 md:p-6">
-        {activeTab === 'posts' && (
-          <>
-            {posts.length > 0 ? (
-              <div className="grid grid-cols-3 gap-2 md:gap-4">
-                {posts.map((post) => (
-                  <div key={post.id} className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer">
-                    <img src={post.image} alt="Post" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                      <span className="text-white font-medium">❤️ {post.likes}</span>
-                    </div>
-                  </div>
-                ))}
               </div>
-            ) : (
-              <EmptyState message="No posts yet" />
             )}
-          </>
-        )}
-        
-        {activeTab === 'trips' && (
-          <>
-            {trips.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {trips.map((trip) => (
-                  <div key={trip.id} className="rounded-lg overflow-hidden dark:bg-gray-700 bg-gray-50 hover:shadow-lg transition cursor-pointer">
-                    <img src={trip.image} alt={trip.destination} className="w-full h-48 object-cover" />
-                    <div className="p-4">
-                      <h3 className="font-bold text-lg">{trip.destination}</h3>
-                      <p className="text-sm mt-1 dark:text-gray-400 text-gray-600">{trip.duration}</p>
-                    </div>
-                  </div>
-                ))}
+          </div>
+
+          {/* Traveler Info */}
+          <div className="rounded-xl bg-white/90 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 backdrop-blur-sm p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+            <h2 className="text-lg font-bold mb-4 text-slate-900 dark:text-slate-100">Traveler Info</h2>
+            <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+              <p><strong>Favorite Travel Type:</strong> {profile.travelerInfo?.favoriteTravelType?.join(', ') || 'N/A'}</p>
+              <p><strong>Favorite Place:</strong> {profile.travelerInfo?.favoriteTraveledPlace || 'N/A'}</p>
+              <p><strong>Interests:</strong> {profile.travelerInfo?.travelInterests?.join(', ') || 'N/A'}</p>
+              <p><strong>Places Visited:</strong> {profile.travelerInfo?.placesVisited?.length || 0}</p>
+              <p><strong>States Visited:</strong> {profile.travelerInfo?.statesVisited?.length || 0}</p>
+              <p><strong>Bucket List:</strong> {profile.travelerInfo?.bucketList?.join(', ') || 'N/A'}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="lg:col-span-6 mt-6 lg:mt-0">
+          <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-slate-100">Trips</h2>
+          {trips.length === 0 ? (
+            <p className="text-slate-500">No trips yet.</p>
+          ) : (
+            trips.map(trip => (
+              <div key={trip._id} className="mb-6">
+                <TripCard trip={trip} />
+                <button 
+                  onClick={() => handleToggleFavorite(trip._id)}
+                  className="text-ei_orange mt-2"
+                >
+                  {favoritetrips.includes(trip._id) ? 'Unfavorite' : 'Favorite'}
+                </button>
+                {isOwnProfile && <Link to={`/edittrip/${trip._id}`} className="text-ei_teal ml-4">Edit</Link>}
               </div>
-            ) : (
-              <EmptyState message="No trips recorded yet" />
-            )}
-          </>
-        )}
-        
-        {activeTab === 'saved' && (
-          <EmptyState message="No saved posts" />
-        )}
-        
-        {activeTab === 'tagged' && (
-          <EmptyState message="No tagged posts" />
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Main Profile Component
-const Profile = () => {
-  const isDark = false; // Default light mode
-  const [user] = useState(sampleUserData);
-  
-  return (
-    <div className="min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900">
-      
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
-        {/* Profile Header Card */}
-        <div className="rounded-xl dark:bg-gray-800 bg-white shadow-lg overflow-hidden">
-          <ProfileHeader user={user} isDark={isDark} />
+            ))
+          )}
         </div>
-        
-        {/* Stats Bar */}
-        <StatsBar stats={user.stats} isDark={isDark} />
-        
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Travel Info & Achievements */}
-          <div className="lg:col-span-1 space-y-6">
-            <TravelInfo travelInfo={user.travelInfo} isDark={isDark} />
-            <Achievements achievements={user.achievements} isDark={isDark} />
-          </div>
-          
-          {/* Right Column - Content Tabs */}
-          <div className="lg:col-span-2">
-            <ProfileTabs posts={user.posts} trips={user.trips} isDark={isDark} />
+
+        {/* Favorites Section */}
+        <section className="mt-8">
+          <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-slate-100">Favorite Trips</h2>
+          {favoritePosts.length === 0 ? (
+            <p>No favorite trips yet.</p>
+          ) : (
+            favoritePosts.map(favId => {
+              const favPost = posts.find(p => p._id === favId);
+              if (!favPost) return null;
+              return (
+                <div key={favId} className="mb-4">
+                  <h3>{favPost.title}</h3>
+                  <p>{favPost.content}</p>
+                  {favPost.images?.map(img => (
+                    <img key={img} src={img} alt="Trip image" className="w-48 rounded-lg" />
+                  ))}
+                  <button 
+                    onClick={() => handleToggleFavorite(favId)} 
+                    className="text-ei_orange"
+                  >
+                    {favoritePosts.includes(favId) ? 'Unfavorite' : 'Favorite'}
+                  </button>
+                  {isOwnProfile && <Link to={`/edittrip/${favPost._id}`} className="text-ei_teal ml-4">Edit</Link>}
+                </div>
+              );
+            })
+          )}
+        </section>
+
+        {/* Right Sidebar (reuse from Home) */}
+        <aside className="lg:col-span-3 hidden lg:block">
+          {/* <RightSidebar /> */}  {/* Add if needed */}
+        </aside>
+      </section>
+
+      {/* Modals */}
+      {isEditing && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-slate-700 p-6 rounded-lg max-w-md w-full">
+            <EditProfileForm 
+              profile={profile} 
+              onClose={() => setIsEditing(false)} 
+              onUpdate={setProfile} 
+            />
           </div>
         </div>
-      </div>
-    </div>
-  );
-};
+      )}
 
-export default Profile;
+      {isCreatingTrip && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-slate-700 p-6 rounded-lg max-w-md w-full">
+            <CreateTripForm 
+              onClose={() => setIsCreatingTrip(false)} 
+              onCreate={(newTrip) => setPosts([newTrip, ...posts])} 
+              userId={id || user?._id} 
+            />
+          </div>
+        </div>
+      )}
+    </main>
+  );
+}
+
+export default ProfilePage;
