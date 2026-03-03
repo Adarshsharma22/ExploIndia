@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TripCard = ({ post }) => {
+const TripCard = ({ post, onClick  }) => {
   if (!post) {
     return (
       <article className="rounded-xl bg-white/90 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 backdrop-blur-sm p-4 shadow mb-4">
@@ -13,10 +13,10 @@ const TripCard = ({ post }) => {
   const profilePic = user.profilePic || 'img/avtar.png'; // fallback
 
   return (
-    <article className="group relative overflow-hidden rounded-[2rem] bg-white/40 dark:bg-slate-900/40 border border-white/40 dark:border-slate-700/40 backdrop-blur-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 mb-6">
+    <article onClick={() => onClick && onClick(post)} className="group relative overflow-hidden rounded-4xl bg-white/40 dark:bg-slate-900/40 border border-white/40 dark:border-slate-700/40 backdrop-blur-2xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] transition-all duration-500 mb-6">
   
   {/* Subtle glass reflection highlight */}
-  <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/50 to-transparent dark:via-slate-500/30"></div>
+  <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-white/50 to-transparent dark:via-slate-500/30"></div>
 
   <div className="flex items-start gap-4">
     {/* AVATAR SECTION */}
@@ -65,7 +65,7 @@ const TripCard = ({ post }) => {
           {post.images.slice(0, 3).map((img, index) => (
             <div 
               key={index} 
-              className={`relative overflow-hidden rounded-[1.5rem] border border-white/20 dark:border-slate-700/20 shadow-sm ${
+              className={`relative overflow-hidden rounded-3xl border border-white/20 dark:border-slate-700/20 shadow-sm ${
                 post.images.length === 3 && index === 0 ? 'row-span-2 h-full' : 'h-36'
               }`}
             >
@@ -75,7 +75,7 @@ const TripCard = ({ post }) => {
                 alt={`Trip image ${index + 1}`}
               />
               {index === 2 && post.images.length > 3 && (
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px] flex flex-col items-center justify-center text-white font-black rounded-[1.5rem]">
+                <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px] flex flex-col items-center justify-center text-white font-black rounded-3xl">
                   <span className="text-xl">+{post.images.length - 3}</span>
                   <span className="text-[8px] uppercase tracking-widest">Photos</span>
                 </div>

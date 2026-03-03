@@ -35,7 +35,7 @@ function CreateTripForm({ onClose, onCreate }) {
     
     {/* HEADER SECTION */}
     <div className="text-center space-y-2">
-      <h2 className="text-3xl font-extrabold bg-gradient-to-r from-ei_orange to-orange-600 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-extrabold bg-linear-to-r from-ei_orange to-orange-600 bg-clip-text text-transparent">
         Share Your Story
       </h2>
       <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -104,7 +104,7 @@ function CreateTripForm({ onClose, onCreate }) {
       <button 
         type="submit" 
         className="flex-1 py-4 rounded-full font-bold text-white 
-                   bg-gradient-to-r from-ei_orange via-orange-500 to-ei_teal 
+                   bg-linear-to-r from-ei_orange via-orange-500 to-ei_teal 
                    shadow-[0_8px_20px_rgba(255,140,0,0.3)] 
                    hover:shadow-[0_10px_25px_rgba(255,140,0,0.45)] 
                    hover:-translate-y-1 active:scale-95 transition-all duration-300"

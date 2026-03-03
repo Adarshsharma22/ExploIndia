@@ -9,7 +9,7 @@ const MobileMenu = ({ isOpen }) => {
     <div
   id="mobileMenu"
   className={`
-    fixed top-16 right-4 z-[60] w-20 
+    fixed top-16 right-4 z-60 w-20 
     transition-all duration-500 ease-in-out transform origin-top-right
     ${isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'}
     rounded-3xl border border-white/20 dark:border-slate-700/50 
@@ -39,7 +39,7 @@ const MobileMenu = ({ isOpen }) => {
     <Link
       to="/createtrip"
       onClick={() => setIsOpen(false)}
-      className="p-3 rounded-2xl text-white bg-gradient-to-br from-ei_orange to-orange-500 shadow-lg shadow-orange-500/30 hover:brightness-110 transition-all active:scale-90"
+      className="p-3 rounded-2xl text-white bg-linear-to-br from-ei_orange to-orange-500 shadow-lg shadow-orange-500/30 hover:brightness-110 transition-all active:scale-90"
     >
       <i className="uil uil-plus text-2xl"></i>
     </Link>

@@ -11,17 +11,6 @@ export default function Welcome() {
           <div className="w-11 h-11 rounded-xl bg-linear-to-br from-ei_orange via-orange-500 to-ei_teal shadow-[0_4px_12px_rgba(255,140,0,0.35)] flex items-center justify-center text-white text-2xl font-extrabold transition-all duration-500 hover:scale-110">E</div>
           <span className="font-bold text-xl text-slate-800 dark:text-white/90 tracking-wide">Explo<span className="text-ei_orange">India</span></span>
         </a>
-        {/* <nav className="hidden md:flex items-center gap-2 text-sm font-semibold">
-            <Link
-                to="/home"
-                className="px-4 py-2 rounded-full text-slate-700 dark:text-white/90 hover:text-white 
-                           hover:bg-gradient-to-r from-ei_teal to-ei_blue 
-                           hover:shadow-[0_0_12px_rgba(0,180,180,0.4)]
-                           transition-all duration-300"
-              >
-                Home
-            </Link>
-        </nav> */}
       </div>
     </div>
   </header>    

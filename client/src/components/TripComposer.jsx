@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { createTrip, getAllTrips } from '../services/authService';
 import TripCard from './TripCard';
 import { Link } from 'react-router-dom';
+import TripDetailModal from "../pages/TripDetailModal";
 
 const TripComposer = () => {
   const { user, isAuthenticated } = useAuth();
@@ -13,6 +14,7 @@ const TripComposer = () => {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
+  const [selectedTrip, setSelectedTrip] = useState(null);
   const [composerLoading, setComposerLoading] = useState(false);
   const [composerError, setComposerError] = useState(null);
   const [composerSuccess, setComposerSuccess] = useState(null);
@@ -111,7 +113,7 @@ const TripComposer = () => {
           <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
             Latest <span className="text-ei_orange">Trips</span>
           </h2>
-          <div className="h-1 w-12 bg-gradient-to-r from-ei_orange to-ei_teal rounded-full"></div>
+          <div className="h-1 w-12 bg-linear-to-r from-ei_orange to-ei_teal rounded-full"></div>
         </div>
         
         <div className="hidden sm:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400">
@@ -141,9 +143,20 @@ const TripComposer = () => {
           ) : (
             <div className="space-y-8">
               {trips.map((post) => (
-                <TripCard key={post._id} post={post} />
+                <TripCard
+                  key={post._id}
+                  post={post}
+                  onClick={setSelectedTrip}
+                />
               ))}
+              {selectedTrip && (
+                <TripDetailModal
+                  post={selectedTrip}
+                  onClose={() => setSelectedTrip(null)}
+                />
+              )}
             </div>
+            
           )}
       </div>
     </div>

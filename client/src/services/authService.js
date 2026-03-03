@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create a single axios instance with base URL
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // Change to your production URL later
+  baseURL: "https://fm096qfx-5000.inc1.devtunnels.ms/api", // Change to your production URL later
 });
 
 // Automatically add Authorization header if token exists
@@ -103,7 +103,7 @@ export const updateProfile = async (formData) => {
   const token = localStorage.getItem("token");
 
   const res = await axios.put(
-    "http://localhost:5000/api/users/update",
+    "https://fm096qfx-5000.inc1.devtunnels.ms/api/users/update",
     formData,
     {
       headers: {

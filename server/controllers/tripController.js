@@ -6,9 +6,15 @@ import cloudinary from '../config/cloudinary.js';
 export const createTrip = async (req, res) => {
   try {
     const images = [];
-    if (req.files?.images) {
-      for (const file of req.files.images) {
-        const result = await cloudinary.uploader.upload(file.buffer.toString('base64'), { folder: 'exploindia/posts' });
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const base64Image = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+
+        const result = await cloudinary.uploader.upload(base64Image, {
+          folder: 'exploindia/posts',
+        });
+
         images.push(result.secure_url);
       }
     }
@@ -22,7 +28,9 @@ export const createTrip = async (req, res) => {
 
     await trip.save();
     res.json(trip);
+
   } catch (error) {
+    console.error("Create trip error:", error);
     res.status(500).json({ message: error.message });
   }
 };

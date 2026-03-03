@@ -8,7 +8,7 @@ export default function AboutUs() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6">
             Our Mission is to{" "}
-            <span className="bg-gradient-to-r from-ei_orange to-ei_teal bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-ei_orange to-ei_teal bg-clip-text text-transparent">
               Connect Every Traveller
             </span>
           </h1>
@@ -20,7 +20,7 @@ export default function AboutUs() {
           </p>
         </div>
 
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-ei_teal/5 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-linear-to-b from-ei_teal/5 to-transparent pointer-events-none" />
       </section>
 
       {/* FEATURES */}

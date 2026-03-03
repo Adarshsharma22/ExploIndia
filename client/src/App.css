@@ -27,7 +27,6 @@ p {
 
 .text-gradient-orange-teal {
   background: linear-gradient(to right, #f97316, #0ea5e9);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

@@ -46,7 +46,7 @@ const RightSidebar = () => {
   <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
     
     {/* Decorative inner glow */}
-    <div className="absolute -top-10 -right-10 w-32 h-32 bg-ei_teal/10 blur-[40px] rounded-full pointer-events-none"></div>
+    <div className="absolute -top-10 -right-10 w-32 h-32 bg-ei_teal/10 blur-2xl rounded-full pointer-events-none"></div>
 
     <div className="flex items-center justify-between mb-6 px-1">
       <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500">
@@ -71,8 +71,11 @@ const RightSidebar = () => {
             <div className="relative">
               <img
                 className="w-11 h-11 rounded-2xl object-cover ring-2 ring-white/60 dark:ring-slate-800/60 shadow-lg group-hover:scale-110 transition-transform duration-300"
-                src={suggested.profilePic || "/img/default-avatar.jpg"}
+                src={suggested.profilePic || "/img/avtar.png"}
                 alt={suggested.fullName}
+                onError={(e) => {
+                e.target.src = "/img/avtar.png";
+              }}
               />
               <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-ei_teal border-2 border-white dark:border-slate-900 rounded-full"></div>
             </div>
@@ -102,7 +105,7 @@ const RightSidebar = () => {
   {/* --- TRENDING DESTINATIONS (GLASS PILLS) --- */}
   <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-6 shadow-lg">
     
-    <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-ei_orange/10 blur-[40px] rounded-full pointer-events-none"></div>
+    <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-ei_orange/10 blur-2xl rounded-full pointer-events-none"></div>
 
     <h4 className="text-[11px] font-black uppercase tracking-[0.25em] text-slate-400 dark:text-slate-500 mb-5 px-1">
       Trending Hub

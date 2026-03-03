@@ -36,9 +36,9 @@ const profilePic = user.profilePic || 'img/avtar.png';
     <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
       
       {/* Dynamic Top Glow */}
-      <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-ei_orange via-orange-500 to-ei_teal opacity-80"></div>
+      <div className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-ei_orange via-orange-500 to-ei_teal opacity-80"></div>
       
-      {/* Subtle Mesh Gradient Overlay for Glass Effect */}
+      {/* Subtle Mesh linear Overlay for Glass Effect */}
       <div className="absolute -top-24 -right-24 w-48 h-48 bg-ei_teal/10 blur-[60px] rounded-full pointer-events-none"></div>
       <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-ei_orange/10 blur-[60px] rounded-full pointer-events-none"></div>
 
@@ -47,14 +47,14 @@ const profilePic = user.profilePic || 'img/avtar.png';
 
           {/* Profile Image with Pulsing Glow */}
           <div className="relative group">
-            <div className="absolute -inset-1.5 bg-gradient-to-tr from-ei_orange to-ei_teal rounded-full blur-md opacity-20 group-hover:opacity-40 transition duration-700"></div>
+            <div className="absolute -inset-1.5 bg-linear-to-tr from-ei_orange to-ei_teal rounded-full blur-md opacity-20 group-hover:opacity-40 transition duration-700"></div>
             
             <img
               className="relative w-24 h-24 rounded-full object-cover border-[6px] border-white/60 dark:border-slate-800/60 shadow-2xl transition-transform duration-500 group-hover:scale-[1.03]"
               src={profilePic} 
               alt={user.fullName || "User"}
               onError={(e) => {
-                e.target.src = "/img/avtar.jpg";
+                e.target.src = "/img/avtar.png";
               }}
             />
           </div>
@@ -73,8 +73,8 @@ const profilePic = user.profilePic || 'img/avtar.png';
         {/* Action Buttons with Glass-Buttons */}
         <div className="mt-8 grid grid-cols-1 gap-3 px-2">
           <Link
-            to="/create-trip"
-            className="group relative flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-extrabold text-sm transition-all hover:translate-y-[-2px] active:scale-95 shadow-xl shadow-slate-900/20 dark:shadow-white/10"
+            to="/createtrip"
+            className="group relative flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-extrabold text-sm transition-all hover:-translate-y-0.5 active:scale-95 shadow-xl shadow-slate-900/20 dark:shadow-white/10"
           >
             <span className="text-lg leading-none group-hover:rotate-12 transition-transform">✨</span>
             Create Trip
@@ -98,7 +98,7 @@ const profilePic = user.profilePic || 'img/avtar.png';
               </p>
               <p className="text-[10px] uppercase font-black tracking-widest text-slate-400 mt-1">Followers</p>
             </div>
-            <div className="h-10 w-px bg-gradient-to-b from-transparent via-slate-200/50 dark:via-slate-700/50 to-transparent"></div>
+            <div className="h-10 w-px bg-linear-to-b from-transparent via-slate-200/50 dark:via-slate-700/50 to-transparent"></div>
             <div className="text-center group cursor-pointer">
               <p className="text-xl font-black text-slate-800 dark:text-white transition-colors group-hover:text-ei_teal">
                 {user.following?.length || 0}

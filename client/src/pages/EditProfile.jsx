@@ -168,7 +168,7 @@ function EditProfileForm({ profile, onClose, onUpdate }) {
     {/* Buttons */}
     <div className="flex gap-4 pt-4">
       <button type="submit" 
-        className="flex-1 px-6 py-3 rounded-full font-bold text-white bg-gradient-to-r from-ei_teal to-ei_blue hover:shadow-lg hover:brightness-110 transition-all active:scale-95">
+        className="flex-1 px-6 py-3 rounded-full font-bold text-white bg-linear-to-r from-ei_teal to-ei_blue hover:shadow-lg hover:brightness-110 transition-all active:scale-95">
         Save Changes
       </button>
       <button type="button" onClick={onClose} 

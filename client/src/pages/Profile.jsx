@@ -310,13 +310,22 @@ function ProfilePage() {
       </div>
     </div>
   )}
-  <button
-                    onClick={handleLogout}
-                    className="col-span-2 mt-2 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <span>🚪</span>
-                    Logout
-                  </button>
+                  <button
+  onClick={handleLogout}
+  className="group relative col-span-2 mt-4 w-full overflow-hidden rounded-2xl border border-red-200/50 dark:border-red-900/30 bg-red-50/50 dark:bg-red-900/20 p-3.5 transition-all duration-300 hover:bg-red-500 hover:shadow-[0_10px_20px_rgba(239,68,68,0.2)] active:scale-95"
+>
+  {/* Subtle Internal Glow */}
+  <div className="absolute inset-0 bg-linear-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+  <div className="relative z-10 flex items-center justify-center gap-3">
+    <span className="text-xl transition-transform duration-300 group-hover:-translate-x-1">
+      🚪
+    </span>
+    <span className="text-sm font-black uppercase tracking-[0.15em] text-red-600 dark:text-red-400 group-hover:text-white transition-colors duration-300">
+      Logout
+    </span>
+  </div>
+</button>
 </main>
   );
 }
