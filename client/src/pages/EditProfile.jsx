@@ -58,7 +58,7 @@ function EditProfileForm({ profile, onClose, onUpdate }) {
   };
 
   return (
-  <form onSubmit={handleSubmit} className="space-y-6 scroll-auto overflow-y-auto scrollbar-hide text-slate-700 dark:text-slate-100 p-1">
+  <form onSubmit={handleSubmit} className="space-y-6 overflow-y-auto scrollbar-hide max-h-[70vh] text-slate-700 dark:text-slate-100 p-1">
     
     {/* Profile Section */}
     <div className="space-y-4">

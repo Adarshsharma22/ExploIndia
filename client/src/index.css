@@ -8,13 +8,28 @@
   --color-ei_teal: oklch(56.6% 0.08 193);
   --color-ei_blue: oklch(33.958% 0.1144 268.086);
 }
+/* Hide scrollbar but keep scrolling */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
+  -ms-overflow-style: none;  /* IE */
   scrollbar-width: none;     /* Firefox */
 }
+
+/* Hide scrollbar but allow scrolling */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
 
 body::-webkit-scrollbar {
   display: none;

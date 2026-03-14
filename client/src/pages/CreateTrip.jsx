@@ -31,7 +31,7 @@ function CreateTripForm({ onClose, onCreate }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-8 space-y-6 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800">
+    <form onSubmit={handleSubmit} className="space-y-6 overflow-y-auto scrollbar-hide max-h-[80vh] text-slate-700 dark:text-slate-100 p-1 w-[80%] mx-auto">
     
     {/* HEADER SECTION */}
     <div className="text-center space-y-2">
