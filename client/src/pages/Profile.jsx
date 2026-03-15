@@ -5,6 +5,9 @@ import { getProfile, getUserTrip, toggleFavorite } from '../services/authService
 import EditProfile from './EditProfile';
 import CreateTrip from './CreateTrip';  // Renamed from CreatePost
 import TripCard from '../components/TripCard';  // Renamed from PostCard
+import { deleteTrip } from '../services/authService';
+
+
 
 function ProfilePage() {
   const { id } = useParams();
@@ -17,48 +20,65 @@ function ProfilePage() {
   const [isCreatingTrip, setIsCreatingTrip] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [activeMenu, setActiveMenu] = useState(null);
 
   
 
   useEffect(() => {
-    if (authLoading) return;
 
-    const effectiveId = id || user?.id; // Fallback to current user ID if no param
-    console.log('Effective User ID for fetch:', effectiveId); // Add this log for debug
+  if (authLoading) return;
 
+  const effectiveId = id || user?._id;
 
-    const fetchData = async () => {
-      try {
-        setPageLoading(true);
-        const profileData = await getProfile(effectiveId);
-        setProfile(profileData);
-        setFavoriteTrips(profileData.favoriteTrips || []);
+  // 🚨 STOP if ID not ready
+  if (!effectiveId) {
+    console.log("Waiting for user ID...");
+    return;
+  }
 
-        const tripsData = await getUserTrip(effectiveId);
-        setTrips(tripsData);
-      } catch (err) {
-        console.error('Fetch error:', err);
-        setError(err.message || 'Failed to load profile');
-      } finally {
-        setPageLoading(false);
-      }
-    };
+  console.log("Effective User ID for fetch:", effectiveId);
 
-    fetchData();
-  }, [id, user, authLoading]); // Added navigate to deps
+  const fetchData = async () => {
+    try {
+      setPageLoading(true);
+
+      const profileData = await getProfile(effectiveId);
+      setProfile(profileData);
+      setFavoriteTrips(profileData.favoriteTrips || []);
+
+      const tripsData = await getUserTrip(effectiveId);
+      setTrips(tripsData);
+
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError(err.message || "Failed to load profile");
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  fetchData();
+
+}, [id, user?._id, authLoading]); // Added navigate to deps
 
   const handleToggleFavorite = async (tripId) => {
     try {
       await toggleFavorite(tripId);
-      const effectiveId = id || user?.id;
-      const { data } = await getProfile(effectiveId);  // Refresh profile
-      setFavoriteTrips(data.favoriteTrips || []);
+      const effectiveId = id || user?._id;
+      const profileData = await getProfile(effectiveId);
+      setFavoriteTrips(profileData.favoriteTrips || []);
     } catch (err) {
       console.error(err);
     }
   };
 
+  useEffect(() => {
+  const closeMenu = () => setActiveMenu(null);
+  window.addEventListener("click", closeMenu);
+
+  return () => window.removeEventListener("click", closeMenu);
+  }, []);
+  
   const isOwnProfile = (id === user?.id) || !id;  // Hide edit/create if not own profile
 
   const handleLogout = () => {
@@ -69,6 +89,22 @@ function ProfilePage() {
   if (authLoading || pageLoading) return <div className="min-h-screen pt-20 flex items-center justify-center">Loading...</div>;
   if (error) return <div className="min-h-screen pt-20 flex items-center justify-center text-red-500">{error}</div>;
   if (!profile) return <div className="min-h-screen pt-20 flex items-center justify-center">Profile not found</div>;
+
+  const handleEdit = (tripId) => {
+  navigate(`/edittrip/${tripId}`);
+};
+
+const handleDelete = async (tripId) => {
+  try {
+    if (!window.confirm("Delete this trip?")) return;
+
+    await deleteTrip(tripId); // delete from database
+
+    setTrips((prev) => prev.filter((trip) => trip._id !== tripId)); // update UI
+  } catch (err) {
+    console.error("Delete failed", err);
+  }
+};
 
   // Rest of your return statement remains the same
   return (
@@ -223,26 +259,61 @@ function ProfilePage() {
           <p className="text-slate-500 font-medium italic text-lg">Your adventure hasn't started yet. Post your first trip!</p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div  className="space-y-6">
           {trips.map(post => (
             <div key={post._id} className="group relative">
               <TripCard post={post} />
               
-              <div className="absolute top-6 right-16 flex gap-2">
-                 {isOwnProfile && (
-                  <Link 
-                    to={`/edittrip/${post._id}`} 
-                    className="p-2 bg-white/90 dark:bg-slate-800 rounded-full shadow-md text-ei_teal hover:bg-ei_teal hover:text-white transition-all"
-                  >
-                    ✏️
-                  </Link>
-                )}
-                <button 
+              <div className="absolute top-6 right-14">
+                <button
                   onClick={() => handleToggleFavorite(post._id)}
-                  className={`p-2 rounded-full shadow-md transition-all ${favoriteTrips.includes(post._id) ? 'bg-ei_orange text-white' : 'bg-white/90 dark:bg-slate-800 text-slate-400'}`}
+                  className={`p-2 rounded-full backdrop-blur transition-all duration-200 hover:scale-105
+                  ${favoriteTrips.includes(post._id)
+                    ? "bg-ei_orange text-white"
+                    : " hover:dark:bg-slate-800/70 text-slate-400 hover:text-ei_orange"
+                  }`}
                 >
-                  {favoriteTrips.includes(post._id) ? '⭐' : '☆'}
+                  <span className="text-lg">
+                    {favoriteTrips.includes(post._id) ? "⭐" : "☆"}
+                  </span>
                 </button>
+              </div>
+              <div className="absolute top-6 right-4">
+                {(user?.id || user?._id) === post.user?._id && (
+  <div className="relative">
+
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setActiveMenu(activeMenu === post._id ? null : post._id);
+      }}
+      className="p-2 rounded-full text-2xl  hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+    >
+      ⋮
+    </button>
+
+    {activeMenu === post._id && (
+      <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 z-50">
+
+        <button
+          onClick={() => handleEdit(post._id)}
+          className="block w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          onClick={() => handleDelete(post._id)}
+          className="block w-full text-left px-4 py-2 hover:bg-red-50 dark:hover:bg-red-900 text-red-500 text-sm"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+    )}
+
+  </div>
+)}
               </div>
             </div>
           ))}

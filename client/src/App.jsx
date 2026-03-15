@@ -14,6 +14,7 @@ import EditProfile from "./pages/EditProfile";
 import AboutUs from "./pages/AboutUs";
 import Search from "./pages/Search";
 import Welcome from "./pages/Welcome";
+import SuggestedProfile from './pages/SuggestedProfile';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/createtrip" element={<CreateTrip />} />
         <Route path="/edittrip/:id" element={<EditTrip />} /> 
         <Route path="/profile/:id" element={<PrivateRoute><Profile /></PrivateRoute>} /> 
+        <Route path="/suggested-profile/:id" element={<SuggestedProfile />} />
         <Route path="/editprofile" element={<EditProfile />} /> 
         <Route path="/aboutus" element={<AboutUs />} /> 
         <Route path="/search" element={<Search />} /> 

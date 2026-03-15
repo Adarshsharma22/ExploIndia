@@ -177,6 +177,52 @@ export const getTripById = async (id) => {
   }
 };
 
+// Toggle Like on a Trip
+export const toggleLike = async (tripId) => {
+  try {
+    const response = await API.put(`/trips/like/${tripId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to toggle like");
+  }
+};
+
+// Add Comment on a Trip
+export const addComment = async (tripId, commentText) => {
+  try {
+    const response = await API.post(`/trips/${tripId}/comment`, {
+      text: commentText
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to add comment");
+  }
+};
+
+//delet trip api
+export const deleteTrip = async (tripId) => {
+  try {
+    const response = await API.delete(`/trips/${tripId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to delete trip");
+  }
+};
+
+// Edit trip api
+export const editTrip = async (tripId, formData) => {
+  try {
+    const response = await API.put(`/trips/${tripId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to update trip");
+  }
+};
+
 // ───────────────────────────────────────────────
 // Update Trip
 // ───────────────────────────────────────────────

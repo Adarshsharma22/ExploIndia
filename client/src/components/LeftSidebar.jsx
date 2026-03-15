@@ -88,25 +88,6 @@ const profilePic = user.profilePic || 'img/avtar.png';
             Friends
           </Link>
         </div>
-
-        {/* Stats Section with Neumorphic separation */}
-        <div className="mt-8 pt-6 border-t border-slate-200/30 dark:border-slate-700/30">
-          <div className="flex justify-around items-center">
-            <div className="text-center group cursor-pointer">
-              <p className="text-xl font-black text-slate-800 dark:text-white transition-colors group-hover:text-ei_orange">
-                {user.followers?.length || 0}
-              </p>
-              <p className="text-[10px] uppercase font-black tracking-widest text-slate-400 mt-1">Followers</p>
-            </div>
-            <div className="h-10 w-px bg-linear-to-b from-transparent via-slate-200/50 dark:via-slate-700/50 to-transparent"></div>
-            <div className="text-center group cursor-pointer">
-              <p className="text-xl font-black text-slate-800 dark:text-white transition-colors group-hover:text-ei_teal">
-                {user.following?.length || 0}
-              </p>
-              <p className="text-[10px] uppercase font-black tracking-widest text-slate-400 mt-1">Following</p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 

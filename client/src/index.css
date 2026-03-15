@@ -18,6 +18,8 @@
   scrollbar-width: none;     /* Firefox */
 }
 
+
+
 /* Hide scrollbar but allow scrolling */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
