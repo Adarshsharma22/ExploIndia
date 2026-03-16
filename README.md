@@ -252,11 +252,9 @@ npm run server
 Start frontend
 
 npm run dev
+
+
 📸 Screenshots
-
-You can add screenshots here.
-
-Example:
 
 Welcome Page
 <img width="1919" height="1011" alt="Screenshot 2026-02-22 190606" src="https://github.com/user-attachments/assets/74682379-5361-49a9-8b20-6bd19080dea2" />
