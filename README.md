@@ -1,8 +1,7 @@
-🌍 ExploIndia
-A Travel Social Platform for Explorers of India
-ExploIndia Banner
 <img width="2565" height="1428" alt="Gemini_Generated_Image_6q2ag6q2ag6q2ag6" src="https://github.com/user-attachments/assets/0f753b01-8fb4-4c14-83ae-82c0b2118e91" />
 
+🌍 ExploIndia
+A Travel Social Platform for Explorers of India
 
 ExploIndia is a full-stack travel social networking platform where travelers can share their journeys, explore destinations, interact with other explorers, and discover the beauty of India through community experiences.
 
