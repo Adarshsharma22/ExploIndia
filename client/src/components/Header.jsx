@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import MobileMenu from './MobileMenu';
 import { useAuth } from '../context/AuthContext';
-import profile from '../pages/Profile';
+import NotificationBell from '../pages/Notification';
 
 
 
@@ -86,23 +86,26 @@ export default function Header() {
             </button>
 
             {/* Notifications */}
-            <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition relative">
-              <i className="uil uil-bell text-xl"></i>
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-ei_orange rounded-full ring-2 ring-white dark:ring-slate-800 animate-pulse"></span>
-            </button>
+            <div className="p-2  relative">
+                <NotificationBell />
+            </div>
 
             {/* Profile (Desktop – dynamic if logged in) */}
             <Link
-              to={user ? `/profile/${user.id}` : '/login'}  // Dynamic - profile if logged in, else login
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full 
-                       hover:bg-slate-100 dark:hover:bg-slate-600 transition-all"
+              to={user ? `/profile/${user.id}` : '/login'}
+              className="hidden lg:flex items-center gap-2.5 px-1 py-1 pr-4 rounded-full 
+                        border border-transparent hover:border-slate-200 dark:hover:border-slate-500
+                        bg-white/50 dark:bg-slate-800/40 backdrop-blur-sm
+                        hover:bg-white dark:hover:bg-slate-700 
+                        hover:shadow-md active:scale-95 transition-all duration-200 group"
             >
               <img
-                src={profile.profilePic || "./img/headering.pngs"} 
-                className="w-8 h-8 rounded-full shadow-sm"
+                src={user?.profilePic || "./img/headering.pngs"} 
+                className="w-8 h-8 rounded-full object-cover ring-2 ring-white dark:ring-slate-700 shadow-sm"
                 alt="user"
               />
-              <span className="text-sm font-medium text-slate-700 dark:text-white/90">
+              <span className="text-sm font-semibold tracking-tight text-slate-700 dark:text-slate-200 
+                              group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 Profile
               </span>
             </Link>

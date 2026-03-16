@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import Search from "./pages/Search";
 import Welcome from "./pages/Welcome";
 import SuggestedProfile from './pages/SuggestedProfile';
+import Notification from './pages/Notification';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/createtrip" element={<CreateTrip />} />
-        <Route path="/edittrip/:id" element={<EditTrip />} /> 
+        <Route path="/edittrip/:id" element={<EditTrip />} />
+        <Route path="/notification" element={<Notification />}/>
         <Route path="/profile/:id" element={<PrivateRoute><Profile /></PrivateRoute>} /> 
         <Route path="/suggested-profile/:id" element={<SuggestedProfile />} />
         <Route path="/editprofile" element={<EditProfile />} /> 

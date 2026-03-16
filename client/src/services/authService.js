@@ -65,14 +65,14 @@ export const registerUser = async (fullName, username, email, password) => {
 // Get User Profile
 // ───────────────────────────────────────────────
 export const getProfile = async (id) => {
-  try {
-    const response = await API.get(`/users/${id}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message || "Failed to fetch profile"
-    );
+
+  if (!id) {
+    console.warn("getProfile called with undefined ID");
+    return null;
   }
+
+  const res = await API.get(`/users/${id}`);
+  return res.data;
 };
 
 // Get All Public Trips (for Home Feed)
@@ -147,6 +147,16 @@ export const getUserTrip = async (userId) => {
       error.response?.data?.message || "Failed to fetch trips"
     );
   }
+};
+
+// Notification Api
+export const getNotifications = async () => {
+  const res = await API.get("/notifications");
+  return res.data;
+};
+
+export const markNotificationRead = async (id) => {
+  await API.put(`/notifications/${id}/read`);
 };
 
 // ───────────────────────────────────────────────

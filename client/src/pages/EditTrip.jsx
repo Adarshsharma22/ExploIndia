@@ -39,8 +39,7 @@ function EditTrip() {
   }
 
   try {
-    await updateTrip(id, formData);
-    navigate(`/profile/${user._id}`);   // ← FIXED: Pass user ID
+    await updateTrip(id, formData);   // ← FIXED: Pass user ID
   } catch (err) {
     console.error("Update failed", err);
   }
@@ -120,7 +119,6 @@ function EditTrip() {
 
         <button
           type="button"
-          onClick={() => navigate(`/profile/${user._id}`)}   // ← FIXED: Pass user ID
           className="px-6 py-4 border rounded-full text-slate-600 dark:text-slate-300"
         >
           Cancel

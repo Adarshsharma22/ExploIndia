@@ -54,6 +54,8 @@ export const updateProfile = async (req, res) => {
     user.travelerInfo = req.body.travelerInfo ? JSON.parse(req.body.travelerInfo) : user.travelerInfo;
 
     await user.save();
+
+    
     res.json(user);
   } catch (error) {
   console.error("UPDATE PROFILE ERROR:");

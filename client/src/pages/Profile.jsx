@@ -28,15 +28,13 @@ function ProfilePage() {
 
   if (authLoading) return;
 
-  const effectiveId = id || user?._id;
+  const effectiveId = id ?? user?._id;
 
   // 🚨 STOP if ID not ready
   if (!effectiveId) {
-    console.log("Waiting for user ID...");
+    console.log("Waiting for valid user ID...");
     return;
   }
-
-  console.log("Effective User ID for fetch:", effectiveId);
 
   const fetchData = async () => {
     try {
