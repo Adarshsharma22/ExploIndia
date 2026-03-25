@@ -1,3 +1,4 @@
+// profile.jsx
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'; // Added useNavigate
 import { useAuth } from '../context/AuthContext';
@@ -20,7 +21,7 @@ function ProfilePage() {
   const [isCreatingTrip, setIsCreatingTrip] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeMenu, setActiveMenu] = useState(null);
+  
 
   
 
@@ -260,59 +261,16 @@ const handleDelete = async (tripId) => {
         <div  className="space-y-6">
           {trips.map(post => (
             <div key={post._id} className="group relative">
-              <TripCard post={post} />
+              <TripCard
+                post={post}
+                favoriteTrips={favoriteTrips}
+                onToggleFavorite={handleToggleFavorite}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                showActions={true}
+              />
               
-              <div className="absolute top-6 right-14">
-                <button
-                  onClick={() => handleToggleFavorite(post._id)}
-                  className={`p-2 rounded-full backdrop-blur transition-all duration-200 hover:scale-105
-                  ${favoriteTrips.includes(post._id)
-                    ? "bg-ei_orange text-white"
-                    : " hover:dark:bg-slate-800/70 text-slate-400 hover:text-ei_orange"
-                  }`}
-                >
-                  <span className="text-lg">
-                    {favoriteTrips.includes(post._id) ? "⭐" : "☆"}
-                  </span>
-                </button>
-              </div>
-              <div className="absolute top-6 right-4">
-                {(user?.id || user?._id) === post.user?._id && (
-  <div className="relative">
-
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        setActiveMenu(activeMenu === post._id ? null : post._id);
-      }}
-      className="p-2 rounded-full text-2xl  hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-    >
-      ⋮
-    </button>
-
-    {activeMenu === post._id && (
-      <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 z-50">
-
-        <button
-          onClick={() => handleEdit(post._id)}
-          className="block w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm"
-        >
-          ✏️ Edit
-        </button>
-
-        <button
-          onClick={() => handleDelete(post._id)}
-          className="block w-full text-left px-4 py-2 hover:bg-red-50 dark:hover:bg-red-900 text-red-500 text-sm"
-        >
-          🗑 Delete
-        </button>
-
-      </div>
-    )}
-
-  </div>
-)}
-              </div>
+              
             </div>
           ))}
         </div>

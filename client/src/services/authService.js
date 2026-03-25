@@ -9,9 +9,16 @@ const API = axios.create({
 // Automatically add Authorization header if token exists
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
+
   if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
+    req.headers = {
+      ...req.headers,
+      Authorization: `Bearer ${token}`, // 🔥 force attach
+    };
   }
+
+  console.log("FINAL HEADERS:", req.headers); // debug
+
   return req;
 });
 
@@ -122,11 +129,15 @@ export const updateProfile = async (formData) => {
 // ───────────────────────────────────────────────
 export const createTrip = async (formData) => {
   try {
+    const token = localStorage.getItem("token"); // 🔥 ADD THIS
+
     const response = await API.post("/trips/create", formData, {
       headers: {
+        Authorization: `Bearer ${token}`, // 🔥 FORCE TOKEN
         "Content-Type": "multipart/form-data",
       },
     });
+
     return response.data;
   } catch (error) {
     throw new Error(
