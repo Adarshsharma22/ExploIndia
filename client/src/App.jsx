@@ -19,7 +19,7 @@ import Notification from './pages/Notification';
 
 function App() {
   return (
-<div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+<div className="min-h-screen bg-slate-300 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/welcome" replace />} />
@@ -40,7 +40,7 @@ function App() {
         <Route path="/search" element={<Search />} /> 
       </Route>
 
-      {/* Catch-all for 404 */}
+      
       <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </BrowserRouter>

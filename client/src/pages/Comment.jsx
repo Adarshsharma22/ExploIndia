@@ -58,15 +58,15 @@ const Comment = ({ comments, addComment, onClose }) => {
             comments.map((c, i) => (
               <div key={i} className="flex gap-4 group animate-in fade-in duration-500">
                 {/* Avatar Initials */}
-                <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-teal-400/20 to-blue-500/20 flex items-center justify-center border border-white/40 dark:border-white/5">
-                  <span className="text-teal-600 dark:text-teal-400 font-black text-xs uppercase">
-                    {(c.user?.username || 'T').charAt(0)}
-                  </span>
-                </div>
+                <img
+                  src={c.user?.profilePic || "/img/avtar.png"}
+                  alt="user"
+                  className="h-10 w-10 rounded-xl object-cover border border-white/40 dark:border-white/5"
+                />
 
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-xs text-slate-900 dark:text-white mb-1">
-                    {c.user?.username || 'Traveler'}
+                    {c.user?.username || c.user?.fullName || 'Traveler'}
                   </p>
                   <div className="bg-slate-50 dark:bg-slate-800/40 p-3 rounded-2xl rounded-tl-none inline-block max-w-full">
                     <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed break-words">
@@ -92,7 +92,7 @@ const Comment = ({ comments, addComment, onClose }) => {
             <button
               onClick={handleAdd}
               disabled={!newComment.trim()}
-              className="bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-teal-500/20 transition-all active:scale-95"
+              className="bg-teal-700 hover:bg-teal-500 disabled:opacity-50 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-teal-500/20 transition-all active:scale-95"
             >
               Post
             </button>

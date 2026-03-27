@@ -1,39 +1,36 @@
-// authService.js
 import axios from "axios";
 
-// Create a single axios instance with base URL
 const API = axios.create({
-  baseURL: "https://fm096qfx-5000.inc1.devtunnels.ms/api", // Change to your production URL later
+  baseURL: "https://fm096qfx-5000.inc1.devtunnels.ms/api", 
 });
 
-// Automatically add Authorization header if token exists
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
 
   if (token) {
     req.headers = {
       ...req.headers,
-      Authorization: `Bearer ${token}`, // 🔥 force attach
+      Authorization: `Bearer ${token}`, 
     };
   }
 
-  console.log("FINAL HEADERS:", req.headers); // debug
+  console.log("FINAL HEADERS:", req.headers); 
 
   return req;
 });
 
-// ───────────────────────────────────────────────
+
 // Login User
-// ───────────────────────────────────────────────
+
 export const loginUser = async (email, password) => {
   try {
     const response = await API.post("/auth/login", { email, password });
 
-    // Assuming backend returns { token, user: {...} }
+   
     const { token, user } = response.data;
 
-    // Save token to localStorage
     localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
     return { token, user };
   } catch (error) {
@@ -43,9 +40,9 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// ───────────────────────────────────────────────
+
 // Register User
-// ───────────────────────────────────────────────
+
 export const registerUser = async (fullName, username, email, password) => {
   try {
     const response = await API.post("/auth/register", {
@@ -55,10 +52,11 @@ export const registerUser = async (fullName, username, email, password) => {
       password,
     });
 
-    // Assuming backend returns { token, user }
+    
     const { token, user } = response.data;
 
     localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
     return { token, user };
   } catch (error) {
@@ -68,9 +66,8 @@ export const registerUser = async (fullName, username, email, password) => {
   }
 };
 
-// ───────────────────────────────────────────────
 // Get User Profile
-// ───────────────────────────────────────────────
+
 export const getProfile = async (id) => {
 
   if (!id) {
@@ -102,9 +99,9 @@ export const getSuggestedUsers = async () => {
   }
 };
 
-// ───────────────────────────────────────────────
+
 // Update Profile
-// ───────────────────────────────────────────────
+
 export const updateProfile = async (formData) => {
   
   const token = localStorage.getItem("token");
@@ -124,9 +121,9 @@ export const updateProfile = async (formData) => {
 };
 
 
-// ───────────────────────────────────────────────
+
 // Create Trip
-// ───────────────────────────────────────────────
+
 export const createTrip = async (formData) => {
   try {
     const token = localStorage.getItem("token"); // 🔥 ADD THIS
@@ -146,9 +143,8 @@ export const createTrip = async (formData) => {
   }
 };
 
-// ───────────────────────────────────────────────
 // Get User's Trips
-// ───────────────────────────────────────────────
+
 export const getUserTrip = async (userId) => {
   try {
     const response = await API.get(`/trips/user/${userId}`);
@@ -161,6 +157,7 @@ export const getUserTrip = async (userId) => {
 };
 
 // Notification Api
+
 export const getNotifications = async () => {
   const res = await API.get("/notifications");
   return res.data;
@@ -170,9 +167,8 @@ export const markNotificationRead = async (id) => {
   await API.put(`/notifications/${id}/read`);
 };
 
-// ───────────────────────────────────────────────
 // Toggle Favorite Trip
-// ───────────────────────────────────────────────
+
 export const toggleFavorite = async (tripId) => {
   try {
     const response = await API.put(`/trips/favorite/${tripId}`);
@@ -184,9 +180,9 @@ export const toggleFavorite = async (tripId) => {
   }
 };
 
-// ───────────────────────────────────────────────
+
 // Get Trip by ID
-// ───────────────────────────────────────────────
+
 export const getTripById = async (id) => {
   try {
     const response = await API.get(`/trips/${id}`);
@@ -219,6 +215,7 @@ export const addComment = async (tripId, commentText) => {
     throw new Error(error.response?.data?.message || "Failed to add comment");
   }
 };
+
 
 //delet trip api
 export const deleteTrip = async (tripId) => {

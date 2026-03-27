@@ -111,16 +111,20 @@ export const toggleDelet = async (req, res) => {
 // like 
 export const toggleLike = async (req, res) => {
   try {
-
     const trip = await Trip.findById(req.params.id);
-
     if (!trip) return res.status(404).json({ message: "Trip not found" });
 
     const userId = req.userId;
-    const index = trip.likes.indexOf(userId);
 
-    if (index > -1) {
-      trip.likes.splice(index, 1);
+    // ✅ FIX: compare properly
+    const alreadyLiked = trip.likes.some(
+      id => id.toString() === userId
+    );
+
+    if (alreadyLiked) {
+      trip.likes = trip.likes.filter(
+        id => id.toString() !== userId
+      );
     } else {
       trip.likes.push(userId);
     }
@@ -130,7 +134,7 @@ export const toggleLike = async (req, res) => {
     res.json({
       success: true,
       likes: trip.likes.length,
-      liked: index === -1
+      liked: !alreadyLiked
     });
 
   } catch (error) {
@@ -183,7 +187,8 @@ export const toggleComment = async (req, res) => {
 export const getTripById = async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id)
-      .populate('user', 'username profilePic fullName');  // Populate user data
+      .populate('user', 'username profilePic fullName')
+      .populate('comments.user', 'username profilePic');  // Populate user data
     if (!trip) return res.status(404).json({ message: 'Trip not found' });
     res.json(trip);
   } catch (error) {
@@ -227,3 +232,4 @@ export const updateTrip = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+

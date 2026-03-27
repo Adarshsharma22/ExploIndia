@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 const LeftSidebar = () => {
   const { user } = useAuth();
 
-  console.log("USER OBJECT:", user);
+  // console.log("USER OBJECT:", user);
 
   // If user is not logged in
   if (!user) {
@@ -33,7 +33,7 @@ const profilePic = user.profilePic || 'img/avtar.png';
   <div className="sticky top-24 space-y-6">
 
     {/* USER PROFILE SECTION */}
-    <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+    <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-950 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
       
       {/* Dynamic Top Glow */}
       <div className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-ei_orange via-orange-500 to-ei_teal opacity-80"></div>
@@ -92,7 +92,7 @@ const profilePic = user.profilePic || 'img/avtar.png';
     </div>
 
     {/* QUICK LINKS SECTION */}
-    <div className="rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-7 shadow-lg relative overflow-hidden">
+    <div className="rounded-[2.5rem] bg-white/40 dark:bg-slate-950 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-7 shadow-lg relative overflow-hidden">
       {/* Decorative inner glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-ei_orange/5 blur-2xl rounded-full"></div>
 

@@ -42,7 +42,7 @@ const RightSidebar = () => {
     <aside className="lg:col-span-3 hidden lg:block space-y-6">
 
       {/* SUGGESTED TRAVELLERS */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-900 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-950 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
         
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-ei_teal/10 blur-2xl rounded-full pointer-events-none"></div>
 
@@ -75,7 +75,7 @@ const RightSidebar = () => {
                       alt={suggested.fullName}
                       onError={(e) => { e.target.src = "/img/avtar.png"; }}
                     />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-ei_teal border-2 border-white dark:border-slate-900 rounded-full"></div>
+                    
                   </div>
                   
                   <div className="flex-1 min-w-0">

@@ -3,6 +3,7 @@ import { createTrip, getUserTrips, toggleComment, toggleFavorite, updateTrip, to
 import { authenticate } from '../middlewares/auth.js';
 import Trip from '../models/Trip.js';
 import upload from '../middlewares/multer.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -12,14 +13,41 @@ router.get('/', async (req, res) => {
   try {
     const trips = await Trip.find()
       .sort({ createdAt: -1 })
+      .limit(20)
       .populate('user', 'username profilePic fullName')
-      .limit(20);
+      .lean(); // ✅ IMPORTANT
 
-    res.json(trips);
+    // 🔥 MANUAL POPULATE COMMENTS
+    const userIds = [
+      ...new Set(
+        trips.flatMap(trip =>
+          trip.comments.map(c => c.user.toString())
+        )
+      )
+    ];
+
+    const users = await User.find({ _id: { $in: userIds } })
+      .select('username profilePic fullName')
+      .lean();
+
+    const userMap = {};
+    users.forEach(u => {
+      userMap[u._id.toString()] = u;
+    });
+
+    const finalTrips = trips.map(trip => ({
+      ...trip,
+      comments: trip.comments.map(c => ({
+        ...c,
+        user: userMap[c.user.toString()] || null
+      }))
+    }));
+
+    res.json(finalTrips);
 
   } catch (error) {
-    console.error('Error fetching all trips:', error);
-    res.status(500).json({ message: 'Server error while fetching trips' });
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -33,10 +61,12 @@ router.put('/:id', authenticate, upload.array('images', 5), updateTrip);
 router.delete("/:id", authenticate, toggleDelet);
 
 
+
 router.get("/:id", async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id)
       .populate("user", "username profilePic");
+      
 
     if (!trip) {
       return res.status(404).json({ message: "Trip not found" });

@@ -25,10 +25,10 @@ router.get('/suggested', authenticate, async (req, res) => {
 
     // Get 5 random users who are NOT the current user
     const suggestedUsers = await User.find({
-      _id: { $ne: currentUserId }           // Not current user
+      _id: { $ne: currentUserId }           
     })
-    .select('fullName username profilePic bio')   // Only needed fields
-    .limit(5);
+    .select('fullName username profilePic bio')   
+    .limit(10);
 
     res.json(suggestedUsers);
   } catch (error) {

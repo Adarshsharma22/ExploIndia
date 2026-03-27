@@ -13,33 +13,68 @@ const TripCard = ({
   onDelete,
   showActions = false 
 }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const [likesCount, setLikesCount] = useState(post.likes?.length || 0);
-  const [isLiked, setIsLiked] = useState(post.likes?.includes(user?._id));
+  const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState(post.comments || []);
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [views, setViews] = useState(post.views || 0);
   const [activeMenu, setActiveMenu] = useState(null);
 
+  if (loading) return null;
+
   useEffect(() => {
     setViews(prev => prev + 1);
   }, []);
 
-  const handleLike = async () => {
-    try {
-      const res = await toggleLike(post._id);
-      setLikesCount(res.likes);
-      setIsLiked(res.liked);
-    } catch (err) {
-      console.error("Like failed", err);
-    }
-  };
+ useEffect(() => {
+  if (!user) return;
+
+  const userId = user._id || user.id;
+
+  if (!userId) return;
+
+  setLikesCount(post.likes.length);
+
+  setIsLiked(
+    post.likes.some(id => id.toString() === userId)
+  );
+}, [post, user]);
+
+// console.log("POST LIKES:", post.likes);
+// console.log("USER ID:", user?._id || user?.id);
+
+ const handleLike = async () => {
+  if (!user) return;
+
+  // Optimistic update (instant UI)
+  const prevLiked = isLiked;
+  const prevCount = likesCount;
+
+  setIsLiked(!prevLiked);
+  setLikesCount(prevLiked ? likesCount - 1 : likesCount + 1);
+
+  try {
+    const res = await toggleLike(post._id);
+
+    // Sync with backend (final truth)
+    setLikesCount(res.likes);
+    setIsLiked(res.liked);
+
+  } catch (err) {
+    console.error("Like failed", err);
+
+    // Revert if API fails
+    setIsLiked(prevLiked);
+    setLikesCount(prevCount);
+  }
+};
 
   return (
     <>
-      <article className="group relative w-full max-w-2xl mx-auto overflow-hidden rounded-[2rem] bg-white/70 dark:bg-slate-900/80 border border-white/50 dark:border-slate-700/50 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] transition-all duration-500 mb-8 md:mb-12 hover:-translate-y-1.5 ring-1 ring-inset ring-white/20">
+      <article className="group relative w-full max-w-2xl mx-auto overflow-hidden rounded-[2rem] bg-white/70 dark:bg-slate-950 border border-white/50 dark:border-slate-700/50 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] transition-all duration-500 mb-8 md:mb-12 hover:-translate-y-1.5 ring-1 ring-inset ring-white/20">
         
         {/* Top Section: Author Info */}
         <div className="flex items-center p-4 md:p-6 gap-4">
@@ -53,15 +88,16 @@ const TripCard = ({
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-bold text-slate-900 dark:text-white text-lg md:text-xl truncate tracking-tight">
-              {post.user?.username || 'Anonymous User'}
+              {post.user?.fullName || 'Anonymous User'}
             </h3>
-            <div className="flex items-center gap-2 text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400">
-              <span className="text-ei_orange font-bold uppercase tracking-wider">{post.location || 'India'}</span>
+            <div className="flex items-center gap-1  text-sm font-medium text-slate-500 dark:text-slate-400">
+              <span className="text-ei_teal tracking-wider">@{post.user?.username || 'Anonymous User'}</span>
               <span className="opacity-30">•</span>
-              <span>{new Date(post.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+              <span className="text-ei_orange ">{new Date(post.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
             </div>
           </div>
           {showActions && (
+              
               <div className="flex items-center gap-2">
 
                 {/* ⭐ Favorite */}
