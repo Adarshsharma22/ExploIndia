@@ -183,6 +183,49 @@ export const toggleComment = async (req, res) => {
   }
 };
 
+// view
+export const toggleView = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+
+    if (!trip) {
+      return res.status(404).json({ message: "Trip not found" });
+    }
+
+    const userId = req.userId;
+
+    // ✅ STOP anonymous spam views
+    if (!userId) {
+      return res.json({ views: trip.views });
+    }
+
+    if (!trip.viewedBy) {
+      trip.viewedBy = [];
+    }
+
+    const identifier = userId || req.ip;
+
+    const alreadyViewed = trip.viewedBy.some(
+      (id) => id.toString() === userId.toString()
+    );
+
+    if (!alreadyViewed) {
+      trip.viewedBy.push(userId);
+      trip.views = (trip.views || 0) + 1;
+      await trip.save();
+    }
+
+    res.json({ views: trip.views });
+
+  } catch (err) {
+    console.error("VIEW ERROR:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+
+
 // Get Trip by ID (with populated user)
 export const getTripById = async (req, res) => {
   try {
@@ -232,4 +275,5 @@ export const updateTrip = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 

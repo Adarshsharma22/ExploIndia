@@ -21,8 +21,8 @@ function ProfilePage() {
   const [isCreatingTrip, setIsCreatingTrip] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [showFullBio, setShowFullBio] = useState(false);
   
 
   useEffect(() => {
@@ -60,6 +60,18 @@ function ProfilePage() {
 
 }, [id, user?._id, authLoading]); // Added navigate to deps
 
+useEffect(() => {
+  const interval = setInterval(async () => {
+    const effectiveId = id ?? user?._id;
+    if (!effectiveId) return;
+
+    const tripsData = await getUserTrip(effectiveId);
+    setTrips(tripsData);
+  }, 3000); // refresh every 3 sec
+
+  return () => clearInterval(interval);
+}, []);
+
   const handleToggleFavorite = async (tripId) => {
     try {
       await toggleFavorite(tripId);
@@ -70,13 +82,6 @@ function ProfilePage() {
       console.error(err);
     }
   };
-
-  useEffect(() => {
-  const closeMenu = () => setActiveMenu(null);
-  window.addEventListener("click", closeMenu);
-
-  return () => window.removeEventListener("click", closeMenu);
-  }, []);
   
   const isOwnProfile = (id === user?.id) || !id;  // Hide edit/create if not own profile
 
@@ -107,14 +112,14 @@ const handleDelete = async (tripId) => {
 
   // Rest of your return statement remains the same
   return (
-    <main className="min-h-screen pt-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+    <main className="min-h-screen pt-24 bg-slate-300 dark:bg-slate-950 transition-colors duration-500">
   <section className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-12 lg:gap-8">
     
     {/* LEFT COLUMN: Profile & Traveler Info */}
     <div className="lg:col-span-4 space-y-6">
       
       {/* Profile Card */}
-      <div className="overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+      <div className="overflow-hidden rounded-3xl bg-white/60 dark:bg-slate-950/60 backdrop-blur-3xl border border-white/40 dark:border-white/7 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.6)]">
         <div className="relative h-32 w-full">
           <img
             className="w-full h-full object-cover"
@@ -139,9 +144,25 @@ const handleDelete = async (tripId) => {
             </div>
           </div>
 
-          <p className="mt-4 text-slate-600 dark:text-slate-300 leading-relaxed italic">
-            "{profile.bio || 'Exploring the unseen India...'}"
-          </p>
+          <div className="mt-4">
+  <p
+    className={`text-slate-600 dark:text-slate-300 leading-relaxed italic transition-all duration-300 ${
+      showFullBio ? "" : "line-clamp-3"
+    }`}
+  >
+    "{profile.bio || 'Exploring the unseen India...'}"
+  </p>
+
+  {/* Read More Button */}
+  {profile.bio && profile.bio.length > 100 && (
+    <button
+      onClick={() => setShowFullBio(!showFullBio)}
+      className="mt-1 text-xs font-bold text-ei_teal hover:underline"
+    >
+      {showFullBio ? "Show Less" : "Read More"}
+    </button>
+  )}
+</div>
           
           <div className="mt-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
              <span className="text-ei_orange">📍</span> {profile.location || 'India'}
@@ -178,7 +199,7 @@ const handleDelete = async (tripId) => {
       </div>
 
       {/* Traveler Insights (Reusing the styled version from before) */}
-      <div className="rounded-xl bg-white/90 dark:bg-slate-900 border border-slate-100 dark:border-slate-600 backdrop-blur-sm p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+      <div className="rounded-xl bg-white/90 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 backdrop-blur-sm p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
             <div className="flex items-center gap-2 mb-6">
               <span className="text-xl">🗺️</span>
               <h2 className="text-xl font-black text-slate-800 dark:text-white tracking-tight">Traveler <span className="text-ei_teal">Stats</span></h2>

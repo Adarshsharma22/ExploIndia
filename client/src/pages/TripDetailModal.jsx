@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const TripDetailModal = ({ post, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,7 +35,7 @@ const TripDetailModal = ({ post, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-6 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-0 md:p-6 animate-in fade-in duration-300">
       
       {/* Dynamic Background Overlay */}
       <div
@@ -84,7 +85,7 @@ const TripDetailModal = ({ post, onClose }) => {
               />
 
               {/* Slider Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/20" />
 
               {/* Nav Arrows (Desktop) */}
               {images.length > 1 && (
@@ -139,20 +140,55 @@ const TripDetailModal = ({ post, onClose }) => {
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700/50">
-                   <img src={post.user?.profilePic || '/img/avtar.png'} className="w-12 h-12 rounded-xl object-cover" alt="" />
-                   <div>
-                     <p className="text-[10px] uppercase font-bold text-slate-400">Published by</p>
-                     <p className="font-bold text-slate-900 dark:text-white">{post.user?.username || 'Traveler'}</p>
-                   </div>
+                <Link
+                  to={`/profile/${post.user?._id}`}
+                  className="group relative flex items-center gap-4 p-4 rounded-3xl 
+                            bg-white dark:bg-slate-900/40 
+                            border border-slate-200/60 dark:border-white/5 
+                            hover:border-ei_teal/30
+                            hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]
+                            transition-all duration-500 ease-out overflow-hidden"
+                >
+                  {/* Subtle Background Accent Gradient on Hover */}
+                  <div className="absolute inset-0 bg-linear-to-br from-ei_teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  {/* Avatar Section */}
+                  <div className="relative shrink-0">
+                    <div className="absolute inset-0 rounded-2xl bg-ei_orange blur-md opacity-0 group-hover:opacity-20 transition-opacity" />
+                    <img
+                      src={post.user?.profilePic || '/img/avtar.png'}
+                      className="relative w-14 h-14 rounded-2xl object-cover ring-1 ring-slate-200 dark:ring-white/10 group-hover:ring-ei_teal/50 transition-all duration-500"
+                      alt={post.user?.fullName}
+                    />
+                    
+                  </div>
+
+                  {/* Info Section */}
+                  <div className="relative z-10 flex flex-col gap-0.5">
+                    <span className="text-[10px] uppercase tracking-[0.15em] font-black text-slate-400 dark:text-slate-500">
+                      Author
+                    </span>
+                    <span className="text-lg font-semibold text-ei_blue dark:text-slate-100 group-hover:text-ei_teal transition-colors duration-300">
+                      {post.user?.fullName || 'Traveler'}
+                    </span>
+                  </div>
+
+                  {/* Premium Decorative Icon */}
+                  <div className="ml-auto relative z-10 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out">
+                    <div className="p-2 rounded-full bg-ei_teal/10 text-ei_teal">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
                 </div>
-              </div>
 
               {/* Editorial Divider */}
               <div className="flex items-center gap-4 mb-10">
-                 <div className="h-[2px] flex-1 bg-gradient-to-r from-ei_teal/40 to-transparent"></div>
+                 <div className="h-0.5 flex-1 bg-linear-to-r from-ei_teal/40 to-transparent"></div>
                  <span className="text-ei_teal text-xl">✦</span>
-                 <div className="h-[2px] flex-1 bg-gradient-to-l from-ei_orange/40 to-transparent"></div>
+                 <div className="h-0.5 flex-1 bg-linear-to-l from-ei_orange/40 to-transparent"></div>
               </div>
 
               {/* Body Text */}

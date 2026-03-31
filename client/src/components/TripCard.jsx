@@ -1,9 +1,10 @@
 // TripCard.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { toggleLike, addComment } from '../services/authService';
 import TripDetailModal from '../pages/TripDetailModal';
 import Comment from '../pages/Comment';
+import { incrementViews } from '../services/authService';
 
 const TripCard = ({ 
   post, 
@@ -22,12 +23,27 @@ const TripCard = ({
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [views, setViews] = useState(post.views || 0);
   const [activeMenu, setActiveMenu] = useState(null);
+  const hasViewed = useRef(false);
 
   if (loading) return null;
 
   useEffect(() => {
-    setViews(prev => prev + 1);
-  }, []);
+  const viewedKey = `viewed_${post._id}`;
+  const alreadyViewed = localStorage.getItem(viewedKey);
+
+  if (!alreadyViewed) {
+    const updateViews = async () => {
+      const res = await incrementViews(post._id);
+
+      if (res?.views !== undefined) {
+        setViews(res.views);
+      }
+    };
+
+    updateViews();
+    localStorage.setItem(viewedKey, "true");
+  }
+}, [post._id]);
 
  useEffect(() => {
   if (!user) return;

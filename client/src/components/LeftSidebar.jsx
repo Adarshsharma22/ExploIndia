@@ -29,11 +29,11 @@ const LeftSidebar = () => {
 const profilePic = user.profilePic || 'img/avtar.png'; 
 
   return (
-    <aside className="lg:col-span-3 hidden lg:block">
+    <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-24">
   <div className="sticky top-24 space-y-6">
 
     {/* USER PROFILE SECTION */}
-    <div className="relative overflow-hidden rounded-[2.5rem] bg-white/40 dark:bg-slate-950 backdrop-blur-2xl border border-white/40 dark:border-slate-700/40 shadow-[0_20px_50px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+    <div className="relative overflow-hidden rounded-[2.5rem] bg-white/60 dark:bg-slate-950/40 backdrop-blur-3xl border border-white/40 dark:border-white/5 p-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] transition-all duration-500">
       
       {/* Dynamic Top Glow */}
       <div className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-ei_orange via-orange-500 to-ei_teal opacity-80"></div>
@@ -74,7 +74,7 @@ const profilePic = user.profilePic || 'img/avtar.png';
         <div className="mt-8 grid grid-cols-1 gap-3 px-2">
           <Link
             to="/createtrip"
-            className="group relative flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-extrabold text-sm transition-all hover:-translate-y-0.5 active:scale-95 shadow-xl shadow-slate-900/20 dark:shadow-white/10"
+            className="group relative flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white! dark:text-slate-900 font-extrabold text-sm transition-all hover:-translate-y-0.5 active:scale-95 shadow-xl shadow-slate-900/20 dark:shadow-white/10"
           >
             <span className="text-lg leading-none group-hover:rotate-12 transition-transform">✨</span>
             Create Trip

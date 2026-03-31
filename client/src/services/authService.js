@@ -204,6 +204,17 @@ export const toggleLike = async (tripId) => {
   }
 };
 
+// views api
+
+export const incrementViews = async (tripId) => {
+  try {
+    const response = await API.put(`/trips/view/${tripId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update views");
+  }
+};
+
 // Add Comment on a Trip
 export const addComment = async (tripId, commentText) => {
   try {

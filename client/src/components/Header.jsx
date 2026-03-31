@@ -19,7 +19,7 @@ export default function Header() {
   
 
   return (
-    <header className="relative top-2 z-50 mx-4 mt-3 p-1 bg-white/40 dark:bg-slate-950 backdrop-blur-xl rounded-[2.5rem] ring-1 ring-white/30 dark:ring-white/10 before:absolute before:-z-10 before:inset-0  before:rounded-[2.5rem] before:blur-2xl before:opacity-20 before:bg-linear-to-r before:from-ei_orange before:via-ei_teal before:to-ei_blue">
+    <header className="relative top-2 z-50 mx-4 mt-3 p-1 bg-white/60 dark:bg-slate-950 backdrop-blur-xl rounded-[2.5rem] ring-1 ring-white/30 dark:ring-white/10 before:absolute before:-z-10 before:inset-0  before:rounded-[2.5rem] before:blur-2xl before:opacity-20 before:bg-linear-to-r before:from-ei_orange before:via-ei_teal before:to-ei_blue">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           
@@ -55,13 +55,13 @@ export default function Header() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-4 text-sm font-medium">
-              <Link to="/home" className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 hover:text-white! transition-all duration-300">
+              <Link to="/home" className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 dark:hover:text-white! hover:text-ei_teal! transition-all duration-300">
                 <span className="relative z-10 flex items-center gap-2">Home</span>
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-linear-to-r from-ei_orange to-ei_teal transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
                 to="#"
-                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 hover:text-white! transition-all duration-300"
+                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 dark:hover:text-white! hover:text-ei_teal! transition-all duration-300"
               >
                 <span className="relative z-10 flex items-center gap-2">Talks</span>
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-linear-to-r from-ei_orange to-ei_teal transition-all duration-300 group-hover:w-full"></span>
@@ -69,14 +69,14 @@ export default function Header() {
               </Link>
               <Link
                 to="/aboutus"
-                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 hover:text-white! transition-all duration-300"
+                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 dark:hover:text-white! hover:text-ei_teal! transition-all duration-300"
               >
                 <span className="relative z-10 flex items-center gap-2">Aboutus</span>
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-linear-to-r from-ei_orange to-ei_teal transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
                 to="/createtrip"
-                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 hover:text-white! transition-all duration-300"
+                className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 dark:hover:text-white! hover:text-ei_teal! transition-all duration-300"
               >
                 <span className="relative z-10 flex items-center gap-2">Create Trip</span>
                   <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-linear-to-r from-ei_orange to-ei_teal transition-all duration-300 group-hover:w-full"></span>

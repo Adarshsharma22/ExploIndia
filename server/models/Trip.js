@@ -7,6 +7,8 @@ const tripSchema = new mongoose.Schema({
   images: { type: [String], default: [] }, // Array of image URLs
   location: { type: String, default: '' },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  viewedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+  views: { type: Number, default: 0 },
   comments: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     text: { type: String },

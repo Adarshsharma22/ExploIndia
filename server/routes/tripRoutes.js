@@ -1,5 +1,5 @@
 import express from 'express';
-import { createTrip, getUserTrips, toggleComment, toggleFavorite, updateTrip, toggleLike, toggleDelet } from '../controllers/tripController.js';
+import { createTrip, getUserTrips, toggleComment, toggleFavorite, updateTrip, toggleLike, toggleDelet, toggleView } from '../controllers/tripController.js';
 import { authenticate } from '../middlewares/auth.js';
 import Trip from '../models/Trip.js';
 import upload from '../middlewares/multer.js';
@@ -59,7 +59,7 @@ router.post("/:id/comment", authenticate,toggleComment);
 router.put('/favoriteTrips/:tripId', authenticate, toggleFavorite);
 router.put('/:id', authenticate, upload.array('images', 5), updateTrip);
 router.delete("/:id", authenticate, toggleDelet);
-
+router.put("/view/:id", toggleView );
 
 
 router.get("/:id", async (req, res) => {
