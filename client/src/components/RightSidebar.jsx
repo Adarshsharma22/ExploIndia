@@ -43,7 +43,7 @@ const RightSidebar = () => {
   return (
     <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-24">
       {/* SUGGESTED TRAVELLERS CONTAINER */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-white/60 dark:bg-slate-950/40 backdrop-blur-3xl border border-white/40 dark:border-white/5 p-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.08)] transition-all duration-500">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-white/60 dark:bg-slate-950/40 backdrop-blur-3xl border border-white/40 dark:border-white/5 p-5 shadow-[0_0px_20px_2px_rgba(0,150,136,0.25)] transition-all duration-500">
         
         {/* Animated Background Accents */}
         <div className="absolute -top-12 -right-12 w-40 h-40 bg-ei_teal/10 blur-[60px] rounded-full animate-pulse"></div>
@@ -75,13 +75,13 @@ const RightSidebar = () => {
             </p>
           </div>
         ) : suggestedUsers.length === 0 ? (
-          <div className="py-12 text-center space-y-2">
+          <div className="py-12 text-center space-y-3">
             <span className="text-2xl opacity-20 italic font-black">∅</span>
             <p className="text-xs font-bold text-slate-400 italic">No new explorers found</p>
           </div>
         ) : (
           <div className="relative z-10">
-            <ul className="space-y-6">
+            <ul className="space-y-5">
               {(showAll ? suggestedUsers : suggestedUsers.slice(0, 5)).map((suggested) => (
                 <li 
                   key={suggested._id} 

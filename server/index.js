@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes.js';
 import tripRoutes from './routes/tripRoutes.js';  // ← changed from postRoutes
 import path from 'path'; 
 import notificationRoutes from "./routes/notificationRoutes.js";
+import searchRoutes from "./routes/searchRoutes.js";
 
 dotenv.config();
 
@@ -37,7 +38,12 @@ app.use(express.json());
 app.use("/api/notifications", notificationRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/trips', tripRoutes);          // ← use /api/trips (or keep /api/posts if you rename back)
+app.use('/api/trips', tripRoutes);  
+app.use("/api/search", searchRoutes);       
+
+app.get("/test", (req, res) => {
+  res.send("Server working");
+});
 
 // Test route
 app.get('/', (req, res) => {

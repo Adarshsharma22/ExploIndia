@@ -53,11 +53,11 @@ router.get('/', async (req, res) => {
 
 
 router.get('/user/:userId', getUserTrips);
-router.post('/create', authenticate, upload.array('images', 5), createTrip);
+router.post('/create', authenticate, upload.array('images', 10), createTrip);
 router.put("/like/:id", authenticate, toggleLike);
 router.post("/:id/comment", authenticate,toggleComment);
 router.put('/favoriteTrips/:tripId', authenticate, toggleFavorite);
-router.put('/:id', authenticate, upload.array('images', 5), updateTrip);
+router.put('/:id', authenticate, upload.array('images', 10), updateTrip);
 router.delete("/:id", authenticate, toggleDelet);
 router.put("/view/:id", toggleView );
 

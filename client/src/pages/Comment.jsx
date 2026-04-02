@@ -66,7 +66,7 @@ const Comment = ({ comments, addComment, onClose }) => {
 
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-xs text-slate-900 dark:text-white mb-1">
-                    {c.user?.username || c.user?.fullName || 'Traveler'}
+                    {c.user?.fullName || c.user?.username || 'Traveler'}
                   </p>
                   <div className="bg-slate-50 dark:bg-slate-800/40 p-3 rounded-2xl rounded-tl-none inline-block max-w-full">
                     <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed break-words">

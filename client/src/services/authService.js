@@ -270,4 +270,10 @@ export const updateTrip = async (id, formData) => {
   }
 };
 
+// Search Api
+export const searchData = async (query) => {
+  const res = await API.get(`/search?query=${query}`);
+  return res.data;
+};
+
 export default API;

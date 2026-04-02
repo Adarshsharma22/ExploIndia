@@ -37,9 +37,9 @@ export default function Login() {
                         <Link to="/" className="flex text-x1 items-center gap-3 group"> 
 
                         {/* text */}
-                        <span className="relative z-10 text-3xl font-bold">
+                        <span className="relative z-10 text-3xl text-white! font-bold">
                             W
-                            <span className="text-ei_orange group-hover:text-ei_teal text-4x1 transition-colors duration-300">
+                            <span className="text-ei_orange! group-hover:text-ei_teal! text-4x1 transition-colors duration-300">
                             E
                             </span> 
                             LCOME
@@ -58,7 +58,7 @@ export default function Login() {
 
 
                         </Link>
-                        <Link to="/Signup" className="px-4 py-2 text-sm font-semibold hidden lg:block rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
+                        <Link to="/Signup" className="px-4 py-2 text-sm font-semibold hidden lg:block rounded-full border-2 border-ei_orange text-ei_orange! dark:border-white/90 dark:text-white/90! hover:bg-ei_orange hover:text-white! transition-all duration-300">
                             Need an account? Sign Up
                         </Link>
                     </div>
@@ -108,7 +108,7 @@ export default function Login() {
             </div>
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <a href="#" className="font-medium text-ei_orange hover:text-ei_teal transition-colors duration-200">
+                <a href="#" className="font-medium text-ei_orange hover:text-ei_teal! transition-colors duration-200">
                   Forgot your password?
                 </a>
               </div>
@@ -143,7 +143,7 @@ export default function Login() {
                     </div> */}
                     <div className="text-center text-sm">
                         {error && <p className="text-red-500 mb-2">{error}</p>}  {/* Show error */}
-                        <Link to="/Signup" className="font-medium text-ei_orange hover:text-ei_teal transition-colors duration-200">
+                        <Link to="/Signup" className="font-medium text-ei_orange hover:text-ei_teal! transition-colors duration-200">
                             Don't have an account? Sign up now
                         </Link>
                     </div>

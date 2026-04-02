@@ -43,7 +43,7 @@ export default function Header() {
               <div className="flex flex-col -space-y-1">
                 <h1 className="flex items-baseline font-bold tracking-tight">
                   <span className="text-xl text-slate-700 dark:text-slate-300">Explo</span>
-                  <span className="text-2xl text-slate-900 dark:text-white group-hover:text-ei_orange transition-colors duration-300 ml-0.5">
+                  <span className="text-2xl text-ei_teal group-hover:text-ei_orange transition-colors duration-300 ml-0.5">
                     India
                   </span>
                 </h1>
@@ -137,7 +137,7 @@ export default function Header() {
       Account
     </span>
     <span className="text-sm font-bold tracking-tight text-slate-700 dark:text-slate-100 transition-colors">
-      {user ? (user.name || "Profile") : "Login"}
+      {user ? (user.fullName || "Profile") : "Login"}
     </span>
   </div>
 </Link>
@@ -151,7 +151,7 @@ export default function Header() {
     bg-white/10 dark:bg-slate-800/40 backdrop-blur-md
     hover:bg-ei_orange/10 dark:hover:bg-ei_teal/10
     active:scale-90 transition-all duration-300
-    /* Inner Glow Ring */
+    
     ring-1 ring-slate-200 dark:ring-white/10 
     hover:ring-ei_orange/50 dark:hover:ring-ei_teal/50
   "

@@ -7,11 +7,16 @@ function EditTrip() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
+  const [preview, setPreview] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  // ✅ Fetch trip
   useEffect(() => {
     const fetchTrip = async () => {
       try {
@@ -27,23 +32,46 @@ function EditTrip() {
     fetchTrip();
   }, [id]);
 
+  // ✅ Cleanup preview URLs (important)
+  useEffect(() => {
+    return () => {
+      preview.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [preview]);
+
+  // ✅ Submit
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("title", title);
-  formData.append("description", description);
+    if (!title.trim() || !description.trim()) {
+      alert("Title and Description are required");
+      return;
+    }
 
-  for (const image of images) {
-    formData.append("images", image);
-  }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
 
-  try {
-    await updateTrip(id, formData);   // ← FIXED: Pass user ID
-  } catch (err) {
-    console.error("Update failed", err);
-  }
-};
+    for (const image of images) {
+      formData.append("images", image);
+    }
+
+    formData.append("deletedImages", JSON.stringify(deletedImages));
+
+    try {
+      setLoading(true);
+      await updateTrip(id, formData);
+
+      // ✅ Navigate to USER PROFILE (FIXED)
+      navigate(`/profile/${user?.id}`);
+
+    } catch (err) {
+      console.error("Update failed", err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="min-h-screen pt-24 flex justify-center bg-slate-50 dark:bg-slate-950">
@@ -84,26 +112,69 @@ function EditTrip() {
         {existingImages.length > 0 && (
           <div className="grid grid-cols-3 gap-3">
             {existingImages.map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                alt="trip"
-                className="rounded-xl h-24 object-cover"
-              />
+              <div key={i} className="relative">
+                <img
+                  src={img}
+                  alt="trip"
+                  className="rounded-xl h-24 object-cover w-full"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    // ✅ prevent duplicate delete
+                    if (!deletedImages.includes(img)) {
+                      setDeletedImages(prev => [...prev, img]);
+                    }
+
+                    setExistingImages(prev =>
+                      prev.filter(image => image !== img)
+                    );
+                  }}
+                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full px-2 text-xs"
+                >
+                  ✕
+                </button>
+              </div>
             ))}
           </div>
         )}
 
         {/* NEW IMAGES */}
         <div>
-          <label className="text-xs font-bold uppercase text-slate-500">
-            Upload New Images
-          </label>
+          {preview.length > 0 && (
+            <div className="grid grid-cols-3 gap-3 mt-3">
+              {preview.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt="preview"
+                  className="rounded-xl h-24 object-cover"
+                />
+              ))}
+            </div>
+          )}
+
           <input
             type="file"
             multiple
             accept="image/*"
-            onChange={(e) => setImages([...e.target.files])}
+            onChange={(e) => {
+              const files = [...e.target.files];
+
+              // ✅ limit images
+              if (files.length > 5) {
+                alert("Max 5 images allowed");
+                return;
+              }
+
+              setImages(files);
+
+              const previewUrls = files.map(file =>
+                URL.createObjectURL(file)
+              );
+              setPreview(previewUrls);
+            }}
             className="mt-2"
           />
         </div>
@@ -111,18 +182,20 @@ function EditTrip() {
         {/* BUTTONS */}
         <div className="flex gap-4 pt-4">
           <button
-          type="submit"
-          className="flex-1 py-4 rounded-full text-white font-bold bg-gradient-to-r from-ei_orange to-ei_teal"
-        >
-          Update Trip
-        </button>
+            type="submit"
+            disabled={loading}
+            className="flex-1 py-4 rounded-full text-white font-bold bg-gradient-to-r from-ei_orange to-ei_teal disabled:opacity-50"
+          >
+            {loading ? "Updating..." : "Update Trip"}
+          </button>
 
-        <button
-          type="button"
-          className="px-6 py-4 border rounded-full text-slate-600 dark:text-slate-300"
-        >
-          Cancel
-        </button>
+          <button
+            type="button"
+            onClick={() => navigate(`/profile/${user?.id}`)} // ✅ FIXED
+            className="px-6 py-4 border rounded-full text-slate-600 dark:text-slate-300"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </main>

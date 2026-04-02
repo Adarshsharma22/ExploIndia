@@ -90,7 +90,7 @@ const TripCard = ({
 
   return (
     <>
-      <article className="group relative w-full max-w-2xl mx-auto overflow-hidden rounded-[2rem] bg-white/70 dark:bg-slate-950 border border-white/50 dark:border-slate-700/50 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] transition-all duration-500 mb-8 md:mb-12 hover:-translate-y-1.5 ring-1 ring-inset ring-white/20">
+      <article className="group relative w-full max-w-2xl mx-auto overflow-hidden rounded-[2rem] bg-white/70 dark:bg-slate-950 border border-white/50 dark:border-slate-700/50 backdrop-blur-xl shadow-[0_0px_20px_2px_rgba(0,150,136,0.25)] hover:shadow-[0_0px_20px_10px_rgba(0,150,136,0.25)] transition-all duration-500 mb-8 md:mb-12 hover:-translate-y-1.5 ring-1 ring-inset ring-white/20">
         
         {/* Top Section: Author Info */}
         <div className="flex items-center p-4 md:p-6 gap-4">
@@ -131,29 +131,42 @@ const TripCard = ({
                 {/* ⋮ Menu */}
                 <div className="relative">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveMenu(activeMenu === post._id ? null : post._id);
-                    }}
-                    className="p-2 text-xl hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full"
-                  >
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveMenu(activeMenu === post._id ? null : post._id);
+                      }}
+                      className={`p-2 text-xl rounded-full relative
+                                  transition-all duration-300 ease-in-out
+                                  hover:bg-slate-200 dark:hover:bg-slate-700
+                                  hover:scale-110 active:scale-95
+                                  ${activeMenu === post._id ? "rotate-360 bg-slate-200 dark:bg-slate-700 shadow-md" : ""}
+                                `}
+                      >
                     ⋮
                   </button>
 
                   {activeMenu === post._id && (
-                    <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-slate-800 rounded-xl shadow-lg border z-50">
+                    <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden z-50 transform origin-top-right transition-all duration-200 ease-out animate-in fade-in zoom-in-95">
+  
+                      {/* Edit Action */}
                       <button
                         onClick={() => onEdit?.(post._id)}
-                        className="block w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm"
+                        className="group flex w-full items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                       >
-                        ✏️ Edit
+                        <span className="text-lg group-hover:scale-110 transition-transform">✏️</span>
+                        Edit post
                       </button>
 
+                      {/* Divider */}
+                      <div className="h-px bg-slate-100 dark:bg-slate-800" />
+
+                      {/* Delete Action */}
                       <button
                         onClick={() => onDelete?.(post._id)}
-                        className="block w-full text-left px-4 py-2 hover:bg-red-50 dark:hover:bg-red-900 text-red-500 text-sm"
+                        className="group flex w-full items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                       >
-                        🗑 Delete
+                        <span className="text-lg group-hover:shake transition-transform">🗑</span>
+                        Delete post
                       </button>
                     </div>
                   )}

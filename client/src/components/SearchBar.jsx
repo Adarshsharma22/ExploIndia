@@ -1,49 +1,109 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { searchData } from "../services/authService";
+import { useNavigate } from "react-router-dom";
+import TripDetailModal from "../pages/TripDetailModal";
 
 const SearchBar = () => {
-  return (
-    <div className="flex-1 px-4 hidden lg:flex max-w-2xl mx-auto">
-      <label className="relative w-full group">
-        {/* The Input Field */}
-        <input
-          type="text"
-          aria-label="Search"
-          placeholder="Search destinations, people or hashtags...."
-          className="
-            w-full pl-12  py-3 rounded-2xl outline-none transition-all duration-500
-            /* Glass Base */
-            bg-slate-900/5 dark:bg-white/5 border border-transparent
-            text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500
-            
-            /* Hover State: Subtle Teal Glow */
-            hover:bg-slate-900/10 dark:hover:bg-white/10
-            hover:border-ei_teal/30
-            
-            /* Focus State: Brand Orange Glow */
-            focus:bg-white dark:focus:bg-slate-950
-            focus:ring-2 focus:ring-ei_orange/50
-            focus:shadow-[0_0_25px_-5px_oklch(76.9%_0.188_70.08/0.3)]
-          "
-        />
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState({ users: [], trips: [] });
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const [selectedTrip, setSelectedTrip] = useState(null);
 
-        {/* Search Icon */}
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-          <svg
-            className="w-5 h-5 text-slate-400 group-focus-within:text-ei_orange group-focus-within:scale-110 transition-all duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2.5"
-              d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+  // 🔍 Live search
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (query.trim()) {
+        searchData(query)
+          .then((data) => {
+            setResults(data);
+            setShow(true);
+          })
+          .catch(() => setResults({ users: [], trips: [] }));
+      } else {
+        setShow(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delay);
+  }, [query]);
+
+  return (
+    <div className="relative flex-1 px-4 hidden lg:flex max-w-2xl mx-auto">
+      
+      {/* INPUT */}
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onFocus={() => query && setShow(true)}
+        placeholder="Search people or trips..."
+        className="w-full pl-12 py-3 rounded-2xl outline-none
+        bg-slate-900/5 dark:bg-white/5
+        text-slate-800 dark:text-white
+        focus:ring-2 focus:ring-ei_orange/50"
+      />
+
+      {/* ICON */}
+      <div className="absolute left-8 top-1/2 -translate-y-1/2">
+        🔍
+      </div>
+
+      {/* 🔥 DROPDOWN */}
+      {show && (
+        <div className="absolute top-14 left-0 w-full bg-white dark:bg-slate-900 
+        rounded-xl shadow-lg border dark:border-slate-700 z-50">
+
+          {/* USERS */}
+          {results.users.length > 0 && (
+            <div className="p-2">
+              <p className="text-xs text-slate-400 px-2">Users</p>
+              {results.users.map((user) => (
+                <div
+                  key={user._id}
+                  onClick={() => navigate(`/profile/${user._id}`)}
+                  className="px-3 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                >
+                  {user.username} • {user.fullName}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* TRIPS */}
+          {results.trips.length > 0 && (
+            <div className="p-2 border-t dark:border-slate-700">
+              <p className="text-xs text-slate-400 px-2">Trips</p>
+              {results.trips.map((trip) => (
+                <div
+                  key={trip._id}
+                  onClick={() => {
+                    setSelectedTrip(trip);
+                    setShow(false); // close dropdown
+                  }}
+                  className="px-3 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                >
+                  {trip.title}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {selectedTrip && (
+            <TripDetailModal
+              post={selectedTrip}
+              onClose={() => setSelectedTrip(null)}
             />
-          </svg>
+          )}
+
+          {/* EMPTY */}
+          {results.users.length === 0 && results.trips.length === 0 && (
+            <p className="p-3 text-center text-slate-500">
+              No results found
+            </p>
+          )}
         </div>
-       
-      </label>
+      )}
     </div>
   );
 };

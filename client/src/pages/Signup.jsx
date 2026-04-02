@@ -50,9 +50,9 @@ const Signup = () => {
                         
 
                         {/* text */}
-                        <span className="relative z-10 text-3xl font-bold">
+                        <span className="relative z-10 text-3xl text-white! font-bold">
                             W
-                            <span className="text-ei_orange group-hover:text-ei_teal transition-colors duration-300">
+                            <span className="text-ei_orange! group-hover:text-ei_teal! transition-colors duration-300">
                             E
                             </span> 
                             LCOME
@@ -68,7 +68,7 @@ const Signup = () => {
 
 
                         </Link>
-                        <Link to="/login" className="px-4 py-2 text-sm hidden lg:block font-semibold rounded-full border-2 border-ei_orange text-ei_orange dark:border-white/90 dark:text-white/90 hover:bg-ei_orange hover:text-white transition-all duration-300">
+                        <Link to="/login" className="px-4 py-2 text-sm hidden lg:block font-semibold rounded-full border-2 border-ei_orange text-ei_orange! dark:border-white/90 dark:text-white/90! hover:bg-ei_orange hover:text-white! transition-all duration-300">
                             Already have an account? Login
                         </Link>
                     </div>

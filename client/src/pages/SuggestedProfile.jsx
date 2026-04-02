@@ -187,7 +187,7 @@ const SuggestedProfile = () => {
             </h2>
             <Link 
               to="/home" 
-              className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white bg-linear-to-r from-ei_teal to-ei_blue px-5 py-2.5 rounded-full hover:shadow-lg hover:shadow-ei_teal/20 transition-all"
+              className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white! bg-linear-to-r from-ei_teal to-ei_blue px-5 py-2.5 rounded-full hover:shadow-lg hover:shadow-ei_teal/20 transition-all"
             >
               <span className="transition-transform group-hover:-translate-x-1">←</span> Back Home
             </Link>
@@ -203,7 +203,7 @@ const SuggestedProfile = () => {
                 <div key={post._id} className="relative group">
                    <TripCard 
                     post={post} 
-                    showActions={false} // Ensuring User A cannot edit User B's posts
+                    showActions={false} 
                   />
                 </div>
               ))}

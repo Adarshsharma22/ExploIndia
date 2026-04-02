@@ -145,25 +145,25 @@ const handleDelete = async (tripId) => {
           </div>
 
           <div className="mt-4">
-  <p
-    className={`text-slate-600 dark:text-slate-300 leading-relaxed italic transition-all duration-300 ${
-      showFullBio ? "" : "line-clamp-3"
-    }`}
-  >
-    "{profile.bio || 'Exploring the unseen India...'}"
-  </p>
+            <p
+              className={`text-slate-600 dark:text-slate-300 leading-relaxed italic transition-all duration-300 ${
+                showFullBio ? "" : "line-clamp-3"
+              }`}
+            >
+              "{profile.bio || 'Exploring the unseen India...'}"
+            </p>
 
-  {/* Read More Button */}
-  {profile.bio && profile.bio.length > 100 && (
-    <button
-      onClick={() => setShowFullBio(!showFullBio)}
-      className="mt-1 text-xs font-bold text-ei_teal hover:underline"
-    >
-      {showFullBio ? "Show Less" : "Read More"}
-    </button>
-  )}
-</div>
-          
+            {/* Read More Button */}
+            {profile.bio && profile.bio.length > 100 && (
+              <button
+                onClick={() => setShowFullBio(!showFullBio)}
+                className="mt-1 text-xs font-bold text-ei_teal hover:underline"
+              >
+                {showFullBio ? "Show Less" : "Read More..."}
+              </button>
+            )}
+          </div>
+                    
           <div className="mt-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
              <span className="text-ei_orange">📍</span> {profile.location || 'India'}
           </div>
@@ -183,13 +183,13 @@ const handleDelete = async (tripId) => {
             <div className="mt-6 grid grid-cols-2 gap-3">
               <button 
                 onClick={() => setIsEditing(true)}
-                className="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold py-3 rounded-xl hover:bg-ei_teal hover:text-white transition-all duration-300"
+                className="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold py-3 rounded-xl hover:bg-ei_teal hover:text-white transition-all duration-300 hover:cursor-pointer"
               >
                 Edit Profile
               </button>
               <button 
                 onClick={() => setIsCreatingTrip(true)}
-                className="w-full bg-linear-to-r from-ei_orange to-orange-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-500/30 hover:scale-[1.02] transition-all"
+                className="w-full bg-linear-to-r from-ei_orange to-orange-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-500/30 hover:scale-[1.02] transition-all hover:cursor-pointer"
               >
                 Create Trip
               </button>

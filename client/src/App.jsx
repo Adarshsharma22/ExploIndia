@@ -12,7 +12,6 @@ import EditTrip from "./pages/EditTrip";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import AboutUs from "./pages/AboutUs";
-import Search from "./pages/Search";
 import Welcome from "./pages/Welcome";
 import SuggestedProfile from './pages/SuggestedProfile';
 import Notification from './pages/Notification';
@@ -37,7 +36,6 @@ function App() {
         <Route path="/suggested-profile/:id" element={<SuggestedProfile />} />
         <Route path="/editprofile" element={<EditProfile />} /> 
         <Route path="/aboutus" element={<AboutUs />} /> 
-        <Route path="/search" element={<Search />} /> 
       </Route>
 
       

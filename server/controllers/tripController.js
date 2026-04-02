@@ -239,23 +239,38 @@ export const getTripById = async (req, res) => {
   }
 };
 
-// Update Trip
+// update trip
 export const updateTrip = async (req, res) => {
   try {
     const trip = await Trip.findById(req.params.id);
-    if (!trip) return res.status(404).json({ message: 'Trip not found' });
-    if (trip.user.toString() !== req.userId) return res.status(403).json({ message: 'Unauthorized' });
 
-    // Handle image updates (append new, or replace -- for simplicity, replace all)
-    const images = trip.images;
-    if (req.files?.images) {
-      images.length = 0;  // Clear old
-      for (const file of req.files.images) {
-        const result = await cloudinary.uploader.upload(file.buffer.toString('base64'), { folder: 'exploindia/posts' });
-        images.push(result.secure_url);
+    if (!trip) return res.status(404).json({ message: 'Trip not found' });
+    if (trip.user.toString() !== req.userId)
+      return res.status(403).json({ message: 'Unauthorized' });
+
+    // ✅ STEP 1: Remove deleted images FIRST
+    const deletedImages = JSON.parse(req.body.deletedImages || "[]");
+
+    if (deletedImages.length > 0) {
+      trip.images = trip.images.filter(
+        (img) => !deletedImages.includes(img)
+      );
+    }
+
+    // ✅ STEP 2: Add new images (DO NOT CLEAR OLD)
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const base64Image = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+
+        const result = await cloudinary.uploader.upload(base64Image, {
+          folder: "exploindia/posts",
+        });
+
+        trip.images.push(result.secure_url); // ✅ append
       }
     }
 
+    // ✅ STEP 3: Update fields
     trip.title = req.body.title || trip.title;
     trip.description = req.body.description || trip.description;
     trip.location = req.body.location || trip.location;
@@ -271,6 +286,7 @@ export const updateTrip = async (req, res) => {
     });
 
     res.json(trip);
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

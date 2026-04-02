@@ -40,7 +40,7 @@ export default function Welcome() {
           
           
           <a href="Signup"
-             className="px-8 py-3.5 rounded-full font-semibold text-white text-lg
+             className="px-8 py-3.5 rounded-full font-semibold text-white! text-lg
                     bg-linear-to-r  from-ei_teal to-ei_blue
                     hover:shadow-[0_10px_25px_rgba(0,180,180,0.55)]
                     hover:-translate-y-1 hover:brightness-110
@@ -52,7 +52,7 @@ export default function Welcome() {
           <a href="#explore"
              className="px-8 py-3.5 rounded-full font-semibold text-ei_teal text-lg
                     border-2 border-ei_teal bg-white
-                    hover:bg-ei_teal hover:text-white
+                    hover:bg-ei_teal hover:text-white!
                     hover:shadow-[0_6px_18px_rgba(0,180,180,0.45)]
                     hover:-translate-y-1
                     transition-all duration-300">
