@@ -20,7 +20,7 @@ export const searchAll = async (req, res) => {
     // 🧳 Trips (title ONLY)
     const trips = await Trip.find({
       title: { $regex: query, $options: "i" }
-    }).populate("user", "username profilePic");
+    }).populate("user", "username fullName profilePic");
 
     res.json({ users, trips });
 

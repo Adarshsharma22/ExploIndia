@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const TripDetailModal = ({ post, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   if (!post) return null;
 
@@ -140,14 +144,20 @@ const TripDetailModal = ({ post, onClose }) => {
                   </h2>
                 </div>
 
-                <Link
-                  to={`/profile/${post.user?._id}`}
+                <div
+                  onClick={() => {
+                    if (user?._id === post.user?._id) {
+                      navigate(`/profile`); // own profile
+                    } else {
+                      navigate(`/suggested-profile/${post.user?._id}`); // other user
+                    }
+                  }}
                   className="group relative flex items-center gap-4 p-4 rounded-3xl 
                             bg-white dark:bg-slate-900/40 
                             border border-slate-200/60 dark:border-white/5 
                             hover:border-ei_teal/30
                             hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]
-                            transition-all duration-500 ease-out overflow-hidden"
+                            transition-all duration-500 ease-out overflow-hidden cursor-pointer"
                 >
                   {/* Subtle Background Accent Gradient on Hover */}
                   <div className="absolute inset-0 bg-linear-to-br from-ei_teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -169,7 +179,7 @@ const TripDetailModal = ({ post, onClose }) => {
                       Author
                     </span>
                     <span className="text-lg font-semibold text-ei_blue dark:text-slate-100 group-hover:text-ei_teal transition-colors duration-300">
-                      {post.user?.fullName || 'Traveler'}
+                      {post.user?.fullName || post.user?.username || 'Traveler'}
                     </span>
                   </div>
 
@@ -181,7 +191,7 @@ const TripDetailModal = ({ post, onClose }) => {
                       </svg>
                     </div>
                   </div>
-                </Link>
+                </div>
                 </div>
 
               {/* Editorial Divider */}
