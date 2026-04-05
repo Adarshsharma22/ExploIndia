@@ -41,7 +41,8 @@ const RightSidebar = () => {
   }
 
   return (
-    <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-24">
+  <aside className="lg:col-span-3 hidden lg:block space-y-6 sticky top-24">
+    <div className="space-y-6 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
       {/* SUGGESTED TRAVELLERS CONTAINER */}
       <div className="relative overflow-hidden rounded-[2.5rem] bg-white/60 dark:bg-slate-950/40 backdrop-blur-3xl border border-white/40 dark:border-white/5 p-5 shadow-[0_0px_20px_2px_rgba(0,150,136,0.25)] transition-all duration-500">
         
@@ -141,7 +142,8 @@ const RightSidebar = () => {
             </div>
           </div>
       </div>
-    </aside>
+    </div>
+  </aside>
   );
 };
 

@@ -39,11 +39,11 @@ const TripDetailModal = ({ post, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-0 md:p-6 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-0 md:p-6 animate-in fade-in duration-300">
       
       {/* Dynamic Background Overlay */}
       <div
-        className="absolute inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity"
+        className="absolute inset-0 z-10  bg-slate-950/60 backdrop-blur-md transition-opacity"
         onClick={onClose}
       />
 
@@ -52,7 +52,7 @@ const TripDetailModal = ({ post, onClose }) => {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-ei_orange/20 blur-[100px] rounded-full animate-pulse delay-700"></div>
 
       {/* Modal Container */}
-      <div className="relative bg-white/80 dark:bg-slate-900/90 backdrop-blur-3xl border border-white/40 dark:border-slate-700/50 
+      <div className="relative z-20 bg-white/80 dark:bg-slate-900/90 backdrop-blur-3xl border border-white/40 dark:border-slate-700/50 
         w-full h-full md:h-auto md:max-w-5xl md:max-h-[90vh] md:rounded-[2.5rem] 
         overflow-y-auto shadow-[0_32px_120px_-20px_rgba(0,0,0,0.5)] flex flex-col scrollbar-hide">
         

@@ -18,6 +18,10 @@
   scrollbar-width: none;     /* Firefox */
 }
 
+/* add in index.css */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+}
 
 
 /* Hide scrollbar but allow scrolling */

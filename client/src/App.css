@@ -2,7 +2,7 @@
 #root {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacOS, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
-  overflow-x: hidden;
+  
   background-color: #f8fafc;           /* bg-slate-50 */
   color: #1e293b;                      /* text-slate-800 */
   -webkit-font-smoothing: antialiased;

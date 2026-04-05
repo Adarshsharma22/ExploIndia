@@ -13,7 +13,7 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen }) => {
     <div
       className={`
         fixed top-24 left-1/2 -translate-x-1/2 z-50
-        w-[90%] max-w-100 h-20
+        w-[90%] max-w-[400px] h-20
         transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
         ${isMenuOpen ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-20 opacity-0 scale-90 pointer-events-none'}
         

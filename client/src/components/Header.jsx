@@ -19,7 +19,7 @@ export default function Header() {
   
 
   return (
-    <header className="relative top-2 z-50 mx-4 mt-3 p-1 bg-white/60 dark:bg-slate-950 backdrop-blur-xl rounded-[2.5rem] ring-1 ring-white/30 dark:ring-white/10 before:absolute before:-z-10 before:inset-0  before:rounded-[2.5rem] before:blur-2xl before:opacity-20 before:bg-linear-to-r before:from-ei_orange before:via-ei_teal before:to-ei_blue">
+    <header className=" sticky top-2  z-50 mx-2 mt-3 p-1 bg-white/60 dark:bg-slate-950 backdrop-blur-xl rounded-[2.5rem] ring-1 ring-white/30 dark:ring-white/10 before:absolute before:-z-10 before:inset-0  before:rounded-[2.5rem] before:blur-2xl before:opacity-20 before:bg-linear-to-r before:from-ei_orange before:via-ei_teal before:to-ei_blue">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           

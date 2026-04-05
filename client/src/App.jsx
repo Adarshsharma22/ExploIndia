@@ -15,11 +15,11 @@ import AboutUs from "./pages/AboutUs";
 import Welcome from "./pages/Welcome";
 import SuggestedProfile from './pages/SuggestedProfile';
 import Notification from './pages/Notification';
-import TripSearch from "./pages/TripSearch";
+import TripSearch from './pages/TripSearch';
 
 function App() {
   return (
-<div className="min-h-screen bg-slate-300 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+<div className="min-h-screen p-2 bg-slate-300 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/welcome" replace />} />

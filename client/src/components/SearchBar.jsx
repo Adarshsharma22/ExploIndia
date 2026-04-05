@@ -33,7 +33,7 @@ const SearchBar = () => {
       } else {
         setShow(false);
       }
-    }, 300);
+    }, 500);
     return () => clearTimeout(delay);
   }, [query]);
 
@@ -59,8 +59,8 @@ const SearchBar = () => {
             className="w-full pl-12 pr-4 py-3.5 rounded-2xl outline-none transition-all duration-300
               bg-white/10 dark:bg-slate-900/40 backdrop-blur-xl 
               border border-white/20 dark:border-white/10 
-              focus:bg-slate-950
-              text-slate-800 dark:text-white placeholder:text-slate-400/80
+              dark:focus:bg-slate-950 focus:bg-slate-400/50
+              text-slate-800 dark:text-white placeholder:text-slate-600
               focus:ring-1 focus:ring-ei_orange
               hover:ring-1 hover:ring-ei_teal"
           />
