@@ -16,6 +16,7 @@ import Welcome from "./pages/Welcome";
 import SuggestedProfile from './pages/SuggestedProfile';
 import Notification from './pages/Notification';
 import TripSearch from './pages/TripSearch';
+import WorkInProgress from './pages/work';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />} /> 
         <Route path="/aboutus" element={<AboutUs />} /> 
         <Route path="/trip-search" element={<TripSearch />} />
+        <Route path="/Work" element={<WorkInProgress />} />
       </Route>
 
       

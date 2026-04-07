@@ -117,7 +117,7 @@ const TripCard = ({
               <div className="flex items-center gap-2">
 
                 {/* ⭐ Favorite */}
-                <button
+                {/* <button
                   onClick={() => onToggleFavorite?.(post._id)}
                   className={`p-2 rounded-full transition ${
                     favoriteTrips?.includes(post._id)
@@ -126,7 +126,7 @@ const TripCard = ({
                   }`}
                 >
                   {favoriteTrips?.includes(post._id) ? "⭐" : "☆"}
-                </button>
+                </button> */}
 
                 {/* ⋮ Menu */}
                 <div className="relative">
@@ -240,10 +240,10 @@ const TripCard = ({
               </button>
             </div>
 
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 text-[11px] font-bold uppercase tracking-tighter">
+            {/* <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-500 text-[11px] font-bold uppercase tracking-tighter">
               <span className="w-1.5 h-1.5 rounded-full bg-ei_teal animate-pulse"></span>
               {views} Views
-            </div>
+            </div> */}
           </div>
         </div>
       </article>

@@ -135,7 +135,7 @@ const RightSidebar = () => {
           <div className="flex items-center justify-between">
             <div className="text-white">
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-80">ExploIndia Pro</p>
-                <h5 className="text-sm font-black">Share your journey</h5>
+                <h5 className="text-sm font-black">Download App</h5>
             </div>
             <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
                <span className="text-white text-xs">→</span>

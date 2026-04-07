@@ -50,7 +50,7 @@ const Signup = () => {
                         
 
                         {/* text */}
-                        <span className="relative z-10 text-3xl text-white! font-bold">
+                        <span className="relative z-10 text-3xl text-black! dark:text-white! font-bold">
                             W
                             <span className="text-ei_orange! group-hover:text-ei_teal! transition-colors duration-300">
                             E

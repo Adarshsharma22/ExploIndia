@@ -220,10 +220,10 @@ const TripDetailModal = ({ post, onClose }) => {
                        <span className="text-lg font-black text-slate-900 dark:text-white">{post.comments?.length || 0}</span>
                     </div>
                  </div>
-                 <div className="text-right">
+                 {/* <div className="text-right">
                     <span className="text-[10px] font-bold uppercase block">Current Reach</span>
                     <span className="text-lg font-black text-ei_teal">{post.views || 0} Views</span>
-                 </div>
+                 </div> */}
               </div>
 
             </div>

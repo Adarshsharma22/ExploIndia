@@ -102,8 +102,8 @@ const profilePic = user.profilePic || 'img/avtar.png';
       
       <ul className="space-y-3">
         {[
-          { to: "/groups", label: "Groups", emoji: "🏘️", color: "hover:bg-ei_orange/10 hover:text-ei_orange" },
-          { to: "/events", label: "Events", emoji: "📅", color: "hover:bg-ei_teal/10 hover:text-ei_teal" },
+          { to: "/work", label: "Groups", emoji: "🗯️", color: "hover:bg-ei_orange/10 hover:text-ei_orange" },
+          { to: "/work", label: "Events", emoji: "📅", color: "hover:bg-ei_teal/10 hover:text-ei_teal" },
           { to: "/createtrip", label: "Create Post", emoji: "✍️", color: "hover:bg-orange-50/20 hover:text-ei_orange" }
         ].map((link, idx) => (
           <li key={idx}>

@@ -112,11 +112,11 @@ const handleDelete = async (tripId) => {
 
   // Rest of your return statement remains the same
   return (
-    <main className="min-h-screen pt-24 bg-slate-300 dark:bg-slate-950 transition-colors duration-500">
+    <main className="min-h-screen pt-14 bg-slate-300 dark:bg-slate-950 transition-colors duration-500">
   <section className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-12 lg:gap-8">
     
     {/* LEFT COLUMN: Profile & Traveler Info */}
-    <div className="lg:col-span-4 space-y-6">
+    <div className="lg:col-span-4 mt-8 lg:mt-0 space-y-8 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
       
       {/* Profile Card */}
       <div className="overflow-hidden rounded-3xl bg-white/60 dark:bg-slate-950/60 backdrop-blur-3xl border border-white/40 dark:border-white/7 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.6)]">
@@ -168,7 +168,7 @@ const handleDelete = async (tripId) => {
              <span className="text-ei_orange">📍</span> {profile.location || 'India'}
           </div>
 
-          <div className="mt-6 flex gap-6 border-y border-slate-50 dark:border-slate-800 py-4">
+          {/* <div className="mt-6 flex gap-6 border-y border-slate-50 dark:border-slate-800 py-4">
             <div className="text-center">
               <span className="block text-lg font-bold text-slate-900 dark:text-white">{profile.followers?.length || 0}</span>
               <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Followers</span>
@@ -177,7 +177,7 @@ const handleDelete = async (tripId) => {
               <span className="block text-lg font-bold text-slate-900 dark:text-white">{profile.following?.length || 0}</span>
               <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Following</span>
             </div>
-          </div>
+          </div> */}
 
           {isOwnProfile && (
             <div className="mt-6 grid grid-cols-2 gap-3">
@@ -216,55 +216,71 @@ const handleDelete = async (tripId) => {
               </div>
               </div>
               <div className="space-y-4 pt-2">
-      {/* Travel Type Badge */}
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Style</span>
-        <span className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-600">
-          {profile.travelerInfo?.favoriteTravelType?.join(', ') || 'Vagabond'}
-        </span>
-      </div>
+              {/* Travel Type Badge */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Style</span>
+                <span className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-600">
+                  {profile.travelerInfo?.favoriteTravelType?.join(', ') || 'Vagabond'}
+                </span>
+              </div>
 
-      {/* Favorite Place Row */}
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Top Spot</span>
-        <span className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1">
-          <span className="text-ei_orange">📍</span> {profile.travelerInfo?.favoriteTraveledPlace || 'N/A'}
-        </span>
-      </div>
+              {/* Favorite Place Row */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Top Spot</span>
+                <span className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1">
+                  <span className="text-ei_orange">📍</span> {profile.travelerInfo?.favoriteTraveledPlace || 'N/A'}
+                </span>
+              </div>
 
-      {/* Interests Tags */}
-      <div className="space-y-2">
-        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Interests</span>
-        <div className="flex flex-wrap gap-2">
-          {profile.travelerInfo?.travelInterests?.length > 0 ? (
-            profile.travelerInfo.travelInterests.map((interest, i) => (
-              <span key={i} className="px-2 py-1 bg-ei_teal/5 text-ei_teal text-[11px] font-bold rounded-md border border-ei_teal/10">
-                #{interest.toUpperCase()}
-              </span>
-            ))
-          ) : (
-            <span className="text-xs text-slate-400 italic">No interests listed</span>
-          )}
-        </div>
-      </div>
+              {/* Interests Tags */}
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">Interests</span>
+                <div className="flex flex-wrap gap-2">
+                  {profile.travelerInfo?.travelInterests?.length > 0 ? (
+                    profile.travelerInfo.travelInterests.map((interest, i) => (
+                      <span key={i} className="px-2 py-1 bg-ei_teal/5 text-ei_teal text-[11px] font-bold rounded-md border border-ei_teal/10">
+                        #{interest.toUpperCase()}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-slate-400 italic">No interests listed</span>
+                  )}
+                </div>
+              </div>
 
-      {/* Bucket List (Visual Card) */}
-      <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-sm">✨</span>
-          <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">Bucket List</span>
-        </div>
-        <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
-          {profile.travelerInfo?.bucketList?.join(', ') || 'Planning the next adventure...'}
-        </p>
-      </div>
-    </div>
+              {/* Bucket List (Visual Card) */}
+              <div className="mt-4 p-3 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-700">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-sm">✨</span>
+                  <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em]">Bucket List</span>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                  {profile.travelerInfo?.bucketList?.join(', ') || 'Planning the next adventure...'}
+                </p>
+              </div>
             </div>
+            <button
+              onClick={handleLogout}
+              className="group relative col-span-2 mt-4 w-full overflow-hidden rounded-2xl border border-red-200/50 dark:border-red-900/30 bg-red-50/50 dark:bg-red-900/20 p-3.5 transition-all duration-300 hover:bg-red-500 hover:shadow-[0_10px_20px_rgba(239,68,68,0.2)] active:scale-95"
+            >
+              {/* Subtle Internal Glow */}
+              <div className="absolute inset-0 bg-linear-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+              <div className="relative z-10 flex items-center justify-center gap-3">
+                <span className="text-xl transition-transform duration-300 group-hover:-translate-x-1">
+                  🚪
+                </span>
+                <span className="text-sm font-black uppercase tracking-[0.15em] text-red-600 dark:text-red-400 group-hover:text-white transition-colors duration-300">
+                  Logout
+                </span>
+              </div>
+            </button>
+          </div>
       </div>
     </div>
     
     {/* MIDDLE COLUMN: Trips Feed */}
-    <div className="lg:col-span-8 mt-8 lg:mt-0 space-y-8">
+    <div className="lg:col-span-8 space-y-6 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
       
       {/* TABS HEADER */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
@@ -298,7 +314,7 @@ const handleDelete = async (tripId) => {
       )}
 
       {/* FAVORITES SECTION */}
-      <section className="pt-10">
+      {/* <section className="pt-10">
         <div className="flex items-center gap-3 mb-6">
            <div className="w-8 h-8 flex items-center justify-center bg-ei_orange/10 rounded-lg">🔥</div>
            <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Your <span className="text-ei_orange">Favorites</span></h2>
@@ -334,7 +350,7 @@ const handleDelete = async (tripId) => {
             })
           )}
         </div>
-      </section>
+      </section> */}
     </div>
   </section>
 
@@ -358,22 +374,7 @@ const handleDelete = async (tripId) => {
       </div>
     </div>
   )}
-                  <button
-  onClick={handleLogout}
-  className="group relative col-span-2 mt-4 w-full overflow-hidden rounded-2xl border border-red-200/50 dark:border-red-900/30 bg-red-50/50 dark:bg-red-900/20 p-3.5 transition-all duration-300 hover:bg-red-500 hover:shadow-[0_10px_20px_rgba(239,68,68,0.2)] active:scale-95"
->
-  {/* Subtle Internal Glow */}
-  <div className="absolute inset-0 bg-linear-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-  <div className="relative z-10 flex items-center justify-center gap-3">
-    <span className="text-xl transition-transform duration-300 group-hover:-translate-x-1">
-      🚪
-    </span>
-    <span className="text-sm font-black uppercase tracking-[0.15em] text-red-600 dark:text-red-400 group-hover:text-white transition-colors duration-300">
-      Logout
-    </span>
-  </div>
-</button>
 </main>
   );
 }

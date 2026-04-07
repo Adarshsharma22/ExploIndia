@@ -47,11 +47,11 @@ const SuggestedProfile = () => {
   if (!profile) return <div className="min-h-screen pt-20 flex items-center justify-center">Profile not found</div>;
 
   return (
-    <main className="min-h-screen pt-24 bg-slate-300 dark:bg-slate-950 transition-colors duration-500">
+    <main className="min-h-screen pt-14 bg-slate-300 dark:bg-slate-950 transition-colors duration-500">
       <section className="max-w-7xl mx-auto px-4 lg:grid lg:grid-cols-12 lg:gap-8">
         
         {/* LEFT COLUMN: Profile & Traveler Info */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 mt-8 lg:mt-0 space-y-8 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
           
           {/* PREMIUM PROFILE CARD */}
           <div className="overflow-hidden rounded-3xl bg-white/60 dark:bg-slate-950/60 backdrop-blur-3xl border border-white/40 dark:border-white/10 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] dark:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.6)]">
@@ -99,7 +99,7 @@ const SuggestedProfile = () => {
                  <span className="text-ei_orange">📍</span> {profile.location || 'India'}
               </div>
 
-              <div className="mt-6 flex gap-6 border-y border-slate-50 dark:border-slate-800 py-4">
+              {/* <div className="mt-6 flex gap-6 border-y border-slate-50 dark:border-slate-800 py-4">
                 <div className="text-center">
                   <span className="block text-lg font-bold text-slate-900 dark:text-white">{profile.followers?.length || 0}</span>
                   <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Followers</span>
@@ -108,11 +108,11 @@ const SuggestedProfile = () => {
                   <span className="block text-lg font-bold text-slate-900 dark:text-white">{profile.following?.length || 0}</span>
                   <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Following</span>
                 </div>
-              </div>
+              </div> */}
 
               <div className="mt-6">
                 <button className="w-full bg-linear-to-r from-ei_teal to-ei_blue text-white font-black py-4 rounded-2xl shadow-lg shadow-ei_teal/20 hover:scale-[1.02] active:scale-95 transition-all duration-300 uppercase tracking-widest text-xs">
-                  Follow {profile.fullName.split(' ')[0]}
+                  Connect {profile.fullName.split(' ')[0]}
                 </button>
               </div>
             </div>
@@ -180,7 +180,7 @@ const SuggestedProfile = () => {
         </div>
 
         {/* RIGHT COLUMN: Trips Feed */}
-        <div className="lg:col-span-8 mt-8 lg:mt-0 space-y-8">
+        <div className="lg:col-span-8 space-y-6 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] lg:overflow-y-auto scrollbar-hide">
           <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
             <h2 className="text-2xl font-black text-slate-900 dark:text-white">
               Trips by <span className="text-ei_orange">{profile.fullName.split(' ')[0]}</span>

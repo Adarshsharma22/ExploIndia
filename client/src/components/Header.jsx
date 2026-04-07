@@ -60,7 +60,7 @@ export default function Header() {
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-linear-to-r from-ei_orange to-ei_teal transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
-                to="#"
+                to="/work"
                 className="group relative px-4 py-2 rounded-lg font-semibold text-sm text-slate-700 dark:text-slate-200 dark:hover:text-white! hover:text-ei_teal! transition-all duration-300"
               >
                 <span className="relative z-10 flex items-center gap-2">Talks</span>
