@@ -103,11 +103,14 @@ The goal is to create an immersive travel experience.
 🏗 Tech Stack
 
 Frontend
+
 React.js |
 React Router |
 Tailwind CSS |
 Axios |
-Backend |
+
+Backend 
+
 Node.js | 
 Express.js |
 MongoDB |
@@ -117,7 +120,9 @@ JSON Web Token (JWT) |
 File Upload |
 Multer |
 Cloudinary |
-Development Tools |
+
+Development Tools 
+
 Git |
 GitHub |
 DevTunnels / Ngrok.
