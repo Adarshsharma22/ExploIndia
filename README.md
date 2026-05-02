@@ -11,184 +11,114 @@ Built with the MERN Stack, ExploIndia focuses on creating an engaging and visual
 
 
 🚀 Live Features
+
 👤 Authentication System
 
 Secure signup & login
-
 JWT authentication
-
 Protected routes
-
 User session management
 
 
 🧭 Trip Sharing
 
 Users can create travel posts with:
-
 Trip title
-
 Travel description
-
 Location
-
 Multiple travel images
-
 Timestamps
-
 Each trip appears in the community feed for others to explore.
-
 
 ❤️ Social Interaction
 
 Travelers can interact with posts through:
-
 ❤️ Likes
-
 💬 Comments
-
 ⭐ Favorite trips
-
 🔗 Sharing
-
 This makes the platform feel like a travel-focused social network.
-
 
 🔔 Smart Notification System
 
 Users receive notifications when:
-
 Someone comments on their trip
-
 A trip is updated
-
 A new trip is created
-
 Social interactions occur
-
 Notifications appear in a live dropdown panel in the header.
-
 
 👤 Traveler Profiles
 
 Each user profile includes:
-
 Profile picture and cover image
-
 Bio and location
-
 Followers & following
-
 Traveler statistics
-
 Travel interests
-
 Favorite destinations
-
 Bucket list
-
 Users can explore other travelers' profiles and see their trips.
-
 
 ⭐ Favorite Trips
 
 Users can save trips they love.
-
 Saved trips appear in the Favorites section of their profile.
 
 📊 Traveler Insights
 
 Traveler statistics show:
-
 Places visited
-
 States explored
-
 Travel interests
-
 Favorite travel style
-
 Bucket list destinations
-
 
 🔍 Search Feature
 
 Users can search for:
-
 Travelers
-
 Destinations
-
 Trips
-
 
 🖼 Image Upload System
 
 Trips support multiple image uploads using Cloudinary cloud storage.
-
 Features include:
-
 Image preview
-
 Optimized cloud storage
-
 High quality images
-
 
 🎨 Modern UI / UX
 
 The UI includes:
-
 Glassmorphism design
-
-Smooth animations
-
+Smooth animation
 Responsive layout
-
 Dark mode support
-
 Interactive trip cards
-
 The goal is to create an immersive travel experience.
 
-
 🏗 Tech Stack
+
 Frontend
-
 React.js
-
 React Router
-
 Tailwind CSS
-
 Axios
-
 Backend
-
 Node.js
-
 Express.js
-
 MongoDB
-
 Mongoose
-
 Authentication
-
 JSON Web Token (JWT)
-
 File Upload
-
 Multer
-
 Cloudinary
-
 Development Tools
-
 Git
-
 GitHub
-
 DevTunnels / Ngrok
 
 
