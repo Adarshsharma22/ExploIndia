@@ -129,6 +129,8 @@ DevTunnels / Ngrok.
 
 
 📂 Project Structure
+
+```bash
 ExploIndia
 │
 ├── client
@@ -146,7 +148,7 @@ ExploIndia
 │   └── config
 │
 └── README.md
-
+```
 ⚙️ Installation Guide
 1️⃣ Clone the repository
 git clone https://github.com/yourusername/exploindia.git
@@ -256,8 +258,10 @@ Adarsh Sharma
 
 Developer of ExploIndia
 
-GitHub:
-https://github.com/yourusername
+GitHub: https://github.com/yourusername
+
+LinkedIn: www.linkedin.com/in/adarsh-sharma-03974430a
+
 
 
 
