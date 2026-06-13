@@ -107,7 +107,7 @@ export const updateProfile = async (formData) => {
   const token = localStorage.getItem("token");
 
   const res = await axios.put(
-    "https://exploindia.onrender.com//users/update",
+    "https://exploindia.onrender.com/api/users/update",
     formData,
     {
       headers: {

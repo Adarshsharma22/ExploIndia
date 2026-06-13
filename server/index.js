@@ -17,7 +17,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://exploindia.onrender.com/"
+  "https://explo-india-emnm.vercel.app"
 ];
 
 app.use(cors({
