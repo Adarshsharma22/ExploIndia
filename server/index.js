@@ -12,6 +12,7 @@ import searchRoutes from "./routes/searchRoutes.js";
 
 dotenv.config();
 
+
 const app = express();
 
 const allowedOrigins = [
