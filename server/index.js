@@ -16,7 +16,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://fm096qfx-5173.inc1.devtunnels.ms"
+  "https://exploindia.onrender.com/"
 ];
 
 app.use(cors({
