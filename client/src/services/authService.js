@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://fm096qfx-5000.inc1.devtunnels.ms/api", 
+  baseURL: "https://exploindia.onrender.com/", 
 });
 
 API.interceptors.request.use((req) => {
@@ -107,7 +107,7 @@ export const updateProfile = async (formData) => {
   const token = localStorage.getItem("token");
 
   const res = await axios.put(
-    "https://fm096qfx-5000.inc1.devtunnels.ms/api/users/update",
+    "https://exploindia.onrender.com//users/update",
     formData,
     {
       headers: {
